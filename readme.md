@@ -13,7 +13,7 @@ Jobs - это фриланс биржа, предоставляющая возм
 * Среда разработки - **Visual Studio Code**
 * Serverless реализация - [Firebase](https://firebase.google.com)
 ### 2.2. Интерфейс пользователя
-Дизайн приложения: [figma](https://www.figma.com/file/89L3Ofzkax2IihlALaUm0I/jobs?node-id=0%3A1)
+Дизайн приложения и state diagrams: [figma](https://www.figma.com/file/89L3Ofzkax2IihlALaUm0I/jobs?node-id=0%3A1)
 * Экран входа в приложение
 * Экран при первом входе
 * Экран "Заказы" роли "Исполнитель"
