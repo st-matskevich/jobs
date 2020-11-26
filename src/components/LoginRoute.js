@@ -68,8 +68,8 @@ function LoginRoute() {
                     <div className="login-loader"></div>
                 </div>
                 :
-                <form className="login-form" onSubmit={() => { SubmitForm(); }}>
-                    <input className="login-input" type="text"
+                <form className="login-form" onSubmit={SubmitForm}>
+                    <input className="underline-input" type="text"
                         placeholder={loginStage === LoginStages.Phone ? "введите номер телефона" : "введите код из смс"}
                         value={usetInput} onChange={(event) => {
                             setUserInput(event.target.value)

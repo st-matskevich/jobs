@@ -1,5 +1,4 @@
 import "./MainRoute.scss"
-import firebase from "firebase";
 import listIcon from "../svg/list-icon.svg"
 import listIconActive from "../svg/list-icon.active.svg"
 import notificationIcon from "../svg/notification-icon.svg"
@@ -12,6 +11,7 @@ import {
     Link,
     useRouteMatch
 } from "react-router-dom";
+import ProfileScreen from "./ProfileScreen"
 
 function MainRoute() {
 
@@ -26,13 +26,7 @@ function MainRoute() {
         },
         {
             path: "/profile",
-            content: () =>
-                <div>
-                    <p>Profile</p>
-                    <button className="button" onClick={() => {
-                        firebase.auth().signOut()
-                    }}>Выйти</button>
-                </div>
+            content: () => <ProfileScreen/>
         }
     ];
 
