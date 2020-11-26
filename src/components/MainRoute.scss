@@ -1,0 +1,30 @@
+@import "../scss/common.scss";
+
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content-wrapper {
+    flex: 1;
+}
+
+.bottom-navigator-wrapper {
+    display: flex;
+
+    .tab {
+        flex: 1;
+        height: 45px;
+        background: $secondary-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+
+        .icon {
+            width: 25px;
+            height: 25px;
+        }
+    }
+}

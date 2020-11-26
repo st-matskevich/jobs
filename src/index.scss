@@ -1,0 +1,15 @@
+@import "./scss/common.scss";
+
+body {
+  margin: 0;
+  font-family: $font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $primary-color;
+  background: $background-color;
+}
+
+html, body, #root{
+  width: 100%;
+  height: 100%;
+}

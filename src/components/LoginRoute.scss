@@ -1,0 +1,69 @@
+@import "../scss/common.scss";
+
+.title {
+    font-weight: 500;
+    font-size: 60px;
+}
+
+.login-card {
+    background: $secondary-color;
+    justify-content: space-around;
+    flex: 1;
+}
+
+.login-card,
+.login-form,
+.loader-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+$login-height: 180px;
+.login-form {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
+    height: $login-height;
+    justify-content: space-between;
+}
+
+.login-input {
+    outline: none;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #666666;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 300;
+
+    &:focus {
+        border-bottom-color: $primary-color;
+    }
+}
+
+.login-loader {
+    border: 10px solid $primary-color;
+    border-top: 10px solid transparent;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-wrapper {
+    align-items: center;
+    height: $login-height;
+}

@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&display=swap');
+
+$primary-color: #5458F7;
+$primary-focus: #3d3fb3;
+$secondary-color: #FFFFFF;
+$background-color: #F4F4F4;
+$font-family: 'Raleway', sans-serif;
+
+.button, input {
+    font-family: $font-family;
+}
+
+.button {
+    color: $secondary-color;
+    background: $primary-color;
+    border-radius: 7px;
+    border: none;
+    line-height: 36px;
+    padding: 0 14px;
+    font-weight: 400;
+    font-size: 16px;
+    transition: .3s;
+
+    &:hover {
+        background: $primary-focus;
+    }
+}
