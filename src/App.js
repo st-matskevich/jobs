@@ -12,11 +12,14 @@ import MainRoute from './components/MainRoute'
 
 function App() {
 
-    const [signedIn, setSignedIn] = useState(false);
+    const [loaded, setLoaded] = useState(false);
+    const [fetchedUser, setFetchedUser] = useState(false);
 
     useEffect(() => {
         var unsubscirbeProfileUpdates = null;
         firebase.auth().onAuthStateChanged(function (user) {
+            setLoaded(true);
+            setFetchedUser(false);
             if (user) {
                 user.profile = null;
                 unsubscirbeProfileUpdates = firebase.firestore().collection("users").doc(user.uid)
@@ -26,14 +29,13 @@ function App() {
                                 name: doc.data().name,
                                 customer: doc.data().customer,
                             };
+                        setFetchedUser(true);
                         console.log("Current profile: ", user.profile);
                     });
                 console.log("Current user uid: ", user.uid);
                 console.log("Current user phone: ", user.phoneNumber);
             } else if (unsubscirbeProfileUpdates)
                 unsubscirbeProfileUpdates();
-
-            setSignedIn(user != null);
         });
     }, []);
 
@@ -42,10 +44,10 @@ function App() {
             <Router>
                 <Switch>
                     <Route exact path="/">
-                        {!signedIn ? <LoginRoute /> : <Redirect to="/tasks" />}
+                        {fetchedUser ? <Redirect to="/tasks" /> : <LoginRoute loading={!loaded} />}
                     </Route>
                     <Route path="/:section">
-                        {signedIn ? <MainRoute /> : <Redirect to="/" />}
+                        {fetchedUser ? <MainRoute /> : <Redirect to="/" />}
                     </Route>
                 </Switch>
             </Router>

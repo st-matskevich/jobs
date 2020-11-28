@@ -12,13 +12,14 @@ import {
     useRouteMatch
 } from "react-router-dom";
 import ProfileScreen from "./ProfileScreen"
+import TasksScreen from "./TasksScreen"
 
 function MainRoute() {
 
     const routes = [
         {
             path: "/tasks",
-            content: () => <p>List</p>
+            content: () => <TasksScreen/>
         },
         {
             path: "/notifications",
@@ -38,7 +39,7 @@ function MainRoute() {
 
     return (
         <div className="main-wrapper">
-            <div className="main-content-wrapper">
+            <div className="main-content-wrapper flex-column">
                 <Switch>
                     {routes.map((route, index) =>
                         (

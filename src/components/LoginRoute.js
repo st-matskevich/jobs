@@ -7,9 +7,9 @@ const LoginStages = {
     SMS: 1
 }
 
-function LoginRoute() {
+function LoginRoute(props) {
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(props.loading);
     const [loginStage, setLoginStage] = useState(LoginStages.Phone);
     const [usetInput, setUserInput] = useState("");
 

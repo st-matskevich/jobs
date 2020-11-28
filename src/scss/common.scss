@@ -27,16 +27,18 @@ input {
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    user-select: none;
 
-    &:hover {
+    &:hover, &:focus {
         background: $primary-focus;
+        outline: none;
     }
 
     &.secondary {
         color: $background-text;
         background: $background-color;
 
-        &:hover {
+        &:hover, &:focus {
             background: $background-focus;
         }
     }
@@ -104,3 +106,10 @@ input {
     font-weight: 300;
 }
 
+.text-start {
+    text-align: start;
+}
+
+span.background {
+    color: $background-text;
+}
