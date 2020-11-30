@@ -9,7 +9,7 @@ const LoginStages = {
 
 function LoginRoute(props) {
 
-    const [loading, setLoading] = useState(props.loading);
+    const [loading, setLoading] = useState(false);
     const [loginStage, setLoginStage] = useState(LoginStages.Phone);
     const [usetInput, setUserInput] = useState("");
 
@@ -63,7 +63,7 @@ function LoginRoute(props) {
         <div className="login-card">
             <div className="title">jobs</div>
             <div id="captcha"></div>
-            { loading ?
+            { props.loading || loading ?
                 <div className="loader-wrapper">
                     <div className="login-loader"></div>
                 </div>
