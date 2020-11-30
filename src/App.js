@@ -46,14 +46,17 @@ function App() {
     return (
         <div className="App">
             <Router>
-                <Switch>
-                    <Route exact path="/">
-                        {fetchedUser ? <Redirect to="/tasks" /> : <LoginRoute loading={!loaded} />}
-                    </Route>
-                    <Route path="/:section">
-                        {fetchedUser ? <MainRoute /> : <Redirect to="/" />}
-                    </Route>
-                </Switch>
+                {!loaded || (firebase.auth().currentUser && !fetchedUser) ?
+                    <LoginRoute loading={!loaded || (firebase.auth().currentUser && !fetchedUser)} /> :
+                    <Switch>
+                        <Route exact path="/">
+                            {firebase.auth().currentUser ? <Redirect to="/tasks" /> : <LoginRoute loading={!loaded} />}
+                        </Route>
+                        <Route path="/:section">
+                            {firebase.auth().currentUser ? <MainRoute /> : <Redirect to="/" />}
+                        </Route>
+                    </Switch>
+                }
             </Router>
         </div>
     );

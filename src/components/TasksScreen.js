@@ -6,7 +6,8 @@ import {
     Route,
     Link,
     Redirect,
-    useHistory
+    useHistory,
+    useParams
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import addIcon from "../svg/add-icon.svg";
@@ -36,6 +37,7 @@ function TasksScreen() {
                         name: doc.data().name,
                         description: doc.data().description,
                         created_at: doc.data().created_at,
+                        id: doc.id,
                         reference: doc.ref
                     })
                     queryTasks.push(firebase.firestore().doc(doc.data().customer.path).get());
@@ -72,21 +74,23 @@ function TasksScreen() {
                     <Link to="/tasks/add" className="add-task">
                         <img src={addIcon} alt="list" />
                     </Link> : null}
-                {profile ? tasks.map((task, index) => (
-                    <div className="card task-card" key={index}>
-                        <div className="flex-row">
-                            <TextAvatar width="40" height="40" text={task.customer} />
-                            <div className="flex-column flex-1 justify-evenly">
-                                <span className="semi-bold">{task.name}</span>
-                                <span className="regular">{task.customer}</span>
+                <div className="overflow-auto">
+                    {profile ? tasks.map((task, index) => (
+                        <Link className="card task-card" key={index} to={"/tasks/" + task.id}>
+                            <div className="flex-row">
+                                <TextAvatar width="40" height="40" text={task.customer} />
+                                <div className="flex-column flex-1 justify-evenly">
+                                    <span className="semi-bold">{task.name}</span>
+                                    <span className="regular">{task.customer}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="flex-row justify-between bottom">
-                            <span className="regular">0 заявок</span>
-                            <span className="regular">{moment(task.created_at).fromNow()}</span>
-                        </div>
-                    </div>
-                )) : null}
+                            <div className="flex-row justify-between bottom">
+                                <span className="regular">0 заявок</span>
+                                <span className="regular">{moment(task.created_at).fromNow()}</span>
+                            </div>
+                        </Link>
+                    )) : null}
+                </div>
             </Route>
             <Route path="/tasks/add">
                 {profile && profile.customer ?
@@ -103,6 +107,9 @@ function TasksScreen() {
                         <button className="button" onClick={CreateTask}>Создать заказ</button>
                     </div>
                     : <Redirect to="/tasks" />}
+            </Route>
+            <Route path="/tasks/:id">
+                <div></div>
             </Route>
         </Switch>
     );
