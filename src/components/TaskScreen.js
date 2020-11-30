@@ -87,10 +87,10 @@ function TaskScreen() {
                 </div>)
         }
         return (task.replies.map((reply, index) => (
-            <div className="flex-row" key={index}>
-                <TextAvatar width="40" height="40" text={profile.name} />
+            <div className="flex-row reply-wrapper" key={index}>
+                <TextAvatar width="40" height="40" text={reply.client.name} />
                 <div className="flex-column flex-1 justify-between">
-                    <span className="semi-bold">{profile.name}</span>
+                    <span className="semi-bold">{reply.client.name}</span>
                     <div className="reply flex-column">
                         <span>{reply.description}</span>
                         <span className="timestamp">{moment(reply.created_at).fromNow()}</span>
