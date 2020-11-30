@@ -15,8 +15,8 @@ function ProfileScreen() {
 
     const user = firebase.auth().currentUser;
     const profile = useSelector( state => state.profile);
-    const [name, setName] = useState(profile.name ? profile.name : "");
-    const [customer, setCustomer] = useState(profile.customer ? profile.customer : false);
+    const [name, setName] = useState(profile && profile.name ? profile.name : "");
+    const [customer, setCustomer] = useState(profile && profile.customer ? profile.customer : false);
     const history = useHistory();
 
     function SaveProfileData() {

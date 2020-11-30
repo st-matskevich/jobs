@@ -24,6 +24,9 @@ function TaskListScreen() {
     moment.locale('ru')
 
     useEffect(() => {
+        if (!profile)
+            return;
+
         var query = firebase.firestore().collection("tasks");
 
         if (profile.customer)
@@ -60,7 +63,7 @@ function TaskListScreen() {
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
             });
-    }, []);
+    }, [profile]);
 
     function CreateTask() {
         if (!newTaskName)
@@ -123,7 +126,7 @@ function TaskListScreen() {
                     </div>
                     : <Redirect to="/tasks" />}
             </Route>
-            {profile ? <Route path="/tasks/:id" children={<TaskScreen />}></Route> : <Redirect to="/tasks" /> }
+            {profile ? <Route path="/tasks/:id" children={<TaskScreen />}></Route> : <Redirect to="/tasks" />}
         </Switch>
     );
 }
