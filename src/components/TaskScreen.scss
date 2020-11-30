@@ -11,7 +11,28 @@
         color: $background-focus;
         width: 100%;
         margin-top: 10px;
+        margin-bottom: 10px;
         border-style: solid;
         border-top: none;
+    }
+
+    & textarea {
+        resize: none;
+        margin-bottom: 10px;
+        height: 200px;
+    }
+
+    & .reply {
+        margin-top: 10px;
+        font-size: 12px;
+        background: $background-color;
+        border-radius: 20px;
+        padding: 10px;
+
+        & .timestamp{
+            color: $background-focus;
+            margin-top: 5px;
+            align-self: flex-end;
+        }
     }
 }

@@ -31,7 +31,7 @@ function TaskListScreen() {
 
         query/*.orderBy("created_at")*/.get()
             .then(function (querySnapshot) {
-                var queryTasks = [[]]
+                var queryTasks = [[], [], []]
                 querySnapshot.forEach(function (doc) {
                     queryTasks[0].push({
                         name: doc.data().name,
@@ -40,13 +40,22 @@ function TaskListScreen() {
                         id: doc.id,
                         reference: doc.ref
                     })
-                    queryTasks.push(firebase.firestore().doc(doc.data().customer.path).get());
+                    queryTasks[1].push(firebase.firestore().doc(doc.data().customer.path).get());
+                    queryTasks[2].push(firebase.firestore().collection("replies").where("task", "==", doc.ref).get());
                 })
+                queryTasks[1] = Promise.all(queryTasks[1]);
+                queryTasks[2] = Promise.all(queryTasks[2]);
                 return Promise.all(queryTasks);
             })
             .then(function (res) {
                 var resultTasks = res.shift();
-                setTasks(resultTasks.map((val, index) => { return { ...val, customer: res[index].data().name } }));
+                setTasks(resultTasks.map((val, index) =>
+                    ({
+                        ...val,
+                        customer: res[0][index].data().name,
+                        repliesCount: res[1][index].size
+                    })
+                ));
             })
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
@@ -54,6 +63,12 @@ function TaskListScreen() {
     }, []);
 
     function CreateTask() {
+        if (!newTaskName)
+            return;
+
+        if (!newTaskDescription)
+            return;
+
         firebase.firestore().collection("tasks").add({
             name: newTaskName,
             description: newTaskDescription,
@@ -85,7 +100,7 @@ function TaskListScreen() {
                                 </div>
                             </div>
                             <div className="flex-row justify-between bottom">
-                                <span className="regular">0 заявок</span>
+                                <span className="regular">{task.repliesCount} заявок</span>
                                 <span className="regular">{moment(task.created_at).fromNow()}</span>
                             </div>
                         </Link>
@@ -108,8 +123,7 @@ function TaskListScreen() {
                     </div>
                     : <Redirect to="/tasks" />}
             </Route>
-            <Route path="/tasks/:id" children={<TaskScreen />}>
-            </Route>
+            {profile ? <Route path="/tasks/:id" children={<TaskScreen />}></Route> : <Redirect to="/tasks" /> }
         </Switch>
     );
 }
