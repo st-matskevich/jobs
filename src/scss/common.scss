@@ -9,7 +9,7 @@ $background-text: #000000;
 $font-family: "Raleway", sans-serif;
 
 .button,
-input {
+input, textarea {
     font-family: $font-family;
 }
 
@@ -84,6 +84,10 @@ input {
     & .justify-evenly {
         justify-content: space-evenly;
     }
+
+    & .justify-between {
+        justify-content: space-between;
+    }
 }
 
 .flex-1 {
@@ -112,4 +116,13 @@ input {
 
 span.background {
     color: $background-text;
+}
+
+.form-input{
+    background: $background-color;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    padding: 10px;
+    font-size: 13px;
 }

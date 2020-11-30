@@ -1,20 +1,22 @@
-import "./ProfileScreen.scss"
+import "./ProfileScreen.scss";
 import firebase from "firebase";
 import { useState } from 'react';
-import editIcon from "../svg/edit-icon.svg"
+import editIcon from "../svg/edit-icon.svg";
 import {
     Switch,
     Route,
     Link,
     useHistory
 } from "react-router-dom";
-import TextAvatar from "./TextAvatar"
+import { useSelector } from "react-redux";
+import TextAvatar from "./TextAvatar";
 
 function ProfileScreen() {
 
     const user = firebase.auth().currentUser;
-    const [name, setName] = useState(user.profile.name ? user.profile.name : "");
-    const [customer, setCustomer] = useState(user.profile.customer ? user.profile.customer : false);
+    const profile = useSelector( state => state.profile);
+    const [name, setName] = useState(profile.name ? profile.name : "");
+    const [customer, setCustomer] = useState(profile.customer ? profile.customer : false);
     const history = useHistory();
 
     function SaveProfileData() {
@@ -37,12 +39,12 @@ function ProfileScreen() {
             <Route exact path="/profile">
                 <div className="card">
                     {
-                        user.profile ?
+                        profile ?
                             <div className="flex-row" id="user_profile">
-                                <TextAvatar width="40" height="40" text={user.profile.name} />
+                                <TextAvatar width="40" height="40" text={profile.name} />
                                 <div className="flex-column flex-1 justify-evenly">
-                                    <span className="semi-bold">{user.profile.name}</span>
-                                    <span className="regular">{user.profile.customer ? "Заказчик" : "Исполнитель"}</span>
+                                    <span className="semi-bold">{profile.name}</span>
+                                    <span className="regular">{profile.customer ? "Заказчик" : "Исполнитель"}</span>
                                 </div>
                             </div>
                             :

@@ -23,3 +23,19 @@
         resize: none;
     }
 }
+
+.task-card{
+    margin-bottom: 10px;
+    text-align: left;
+    color: $background-text;
+    font-size: 14px;
+
+    & .flex-column {
+        margin-left: 10px;
+    }
+
+    & .bottom {
+        color: $background-focus; 
+        margin-top: 10px;
+    }
+}
