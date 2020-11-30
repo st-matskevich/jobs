@@ -25,7 +25,7 @@ function TaskScreen() {
                     reference: doc.ref
                 },
                 firebase.firestore().doc(doc.data().customer.path).get(),
-                firebase.firestore().collection("replies").where("task", "==", doc.ref).get()])
+                firebase.firestore().collection("replies").where("task", "==", doc.ref).orderBy("created_at", "desc").get()])
             }).then(function (res) {
                 res.push(Promise.all(res[2].docs.map((entry) => firebase.firestore().doc(entry.data().client.path).get())))
                 return Promise.all(res);

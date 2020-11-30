@@ -32,7 +32,7 @@ function TaskListScreen() {
         if (profile.customer)
             query = query.where("customer", "==", profile.reference);
 
-        query/*.orderBy("created_at")*/.get()
+        query.orderBy("created_at", "desc").get()
             .then(function (querySnapshot) {
                 var queryTasks = [[], [], []]
                 querySnapshot.forEach(function (doc) {
