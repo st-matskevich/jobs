@@ -1,4 +1,4 @@
-import "./TasksScreen.scss";
+import "./TaskListScreen.scss";
 import firebase from "firebase";
 import { useState, useEffect } from 'react';
 import {
@@ -6,16 +6,16 @@ import {
     Route,
     Link,
     Redirect,
-    useHistory,
-    useParams
+    useHistory
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import addIcon from "../svg/add-icon.svg";
 import TextAvatar from "./TextAvatar";
+import TaskScreen from "./TaskScreen";
 import moment from 'moment';
-import 'moment/locale/ru'
+import 'moment/locale/ru';
 
-function TasksScreen() {
+function TaskListScreen() {
     const profile = useSelector(state => state.profile);
     const [newTaskName, setNewTaskName] = useState("");
     const [newTaskDescription, setNewTaskDescription] = useState("");
@@ -36,7 +36,7 @@ function TasksScreen() {
                     queryTasks[0].push({
                         name: doc.data().name,
                         description: doc.data().description,
-                        created_at: doc.data().created_at,
+                        created_at: doc.data().created_at.toDate(),
                         id: doc.id,
                         reference: doc.ref
                     })
@@ -46,7 +46,7 @@ function TasksScreen() {
             })
             .then(function (res) {
                 var resultTasks = res.shift();
-                setTasks(resultTasks.map((val, index) => { return { ...val, created_at: val.created_at.toDate(), customer: res[index].data().name } }));
+                setTasks(resultTasks.map((val, index) => { return { ...val, customer: res[index].data().name } }));
             })
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
@@ -79,7 +79,7 @@ function TasksScreen() {
                         <Link className="card task-card" key={index} to={"/tasks/" + task.id}>
                             <div className="flex-row">
                                 <TextAvatar width="40" height="40" text={task.customer} />
-                                <div className="flex-column flex-1 justify-evenly">
+                                <div className="flex-column flex-1 justify-between">
                                     <span className="semi-bold">{task.name}</span>
                                     <span className="regular">{task.customer}</span>
                                 </div>
@@ -108,11 +108,10 @@ function TasksScreen() {
                     </div>
                     : <Redirect to="/tasks" />}
             </Route>
-            <Route path="/tasks/:id">
-                <div></div>
+            <Route path="/tasks/:id" children={<TaskScreen />}>
             </Route>
         </Switch>
     );
 }
 
-export default TasksScreen;
+export default TaskListScreen;

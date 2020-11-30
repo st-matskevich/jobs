@@ -30,6 +30,7 @@
     color: $background-text;
     font-size: 14px;
     text-decoration: none;
+    outline: none;
 
     & .flex-column {
         margin-left: 10px;
@@ -38,5 +39,6 @@
     & .bottom {
         color: $background-focus; 
         margin-top: 10px;
+        font-size: 12px;
     }
 }

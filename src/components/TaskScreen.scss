@@ -1,0 +1,17 @@
+@import "../scss/common.scss";
+@import "./TaskListScreen.scss";
+
+.task-card {
+    & .task-description {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+
+    & hr {
+        color: $background-focus;
+        width: 100%;
+        margin-top: 10px;
+        border-style: solid;
+        border-top: none;
+    }
+}

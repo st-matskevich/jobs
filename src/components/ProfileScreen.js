@@ -42,7 +42,7 @@ function ProfileScreen() {
                         profile ?
                             <div className="flex-row" id="user_profile">
                                 <TextAvatar width="40" height="40" text={profile.name} />
-                                <div className="flex-column flex-1 justify-evenly">
+                                <div className="flex-column flex-1 justify-between">
                                     <span className="semi-bold">{profile.name}</span>
                                     <span className="regular">{profile.customer ? "Заказчик" : "Исполнитель"}</span>
                                 </div>
