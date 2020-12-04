@@ -130,3 +130,24 @@ span.background {
 .overflow-auto{
     overflow: auto;
 }
+
+.reply-wrapper {
+    margin-top: 10px;
+    
+    & .text-avatar {
+        margin-right: 10px;
+    }
+    & .reply {
+        margin-top: 10px;
+        font-size: 12px;
+        background: $background-color;
+        border-radius: 20px;
+        padding: 10px;
+
+        & .timestamp {
+            color: $background-focus;
+            margin-top: 5px;
+            align-self: flex-end;
+        }
+    }
+}

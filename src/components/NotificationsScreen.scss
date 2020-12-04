@@ -1,0 +1,16 @@
+@import "../scss/common.scss";
+
+.notification-card {
+    font-size: 14px;
+    text-align: left;
+
+    & .approve-text {
+        margin-top: 10px;
+    }
+
+    & .timestamp {
+        color: $background-focus;
+        margin-top: 5px;
+        align-self: flex-end;
+    }
+}

@@ -5,6 +5,8 @@ import firebase from "firebase";
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 import { useSelector } from "react-redux";
+import approveIcon from "../svg/approve-icon.svg"
+import hideIcon from "../svg/hide-icon.svg"
 
 function TaskScreen() {
 
@@ -20,6 +22,7 @@ function TaskScreen() {
                 return Promise.all([{
                     name: doc.data().name,
                     description: doc.data().description,
+                    doer: doc.data().doer,
                     created_at: doc.data().created_at.toDate(),
                     id: doc.id,
                     reference: doc.ref
@@ -38,6 +41,7 @@ function TaskScreen() {
                             name: res[3][index].data().name,
                             reference: res[3][index].ref
                         },
+                        hidden: entry.data().hidden,
                         created_at: entry.data().created_at.toDate(),
                         reference: entry.ref
                     }))
@@ -62,6 +66,7 @@ function TaskScreen() {
             description: reply,
             created_at: firebase.firestore.Timestamp.fromDate(new Date()),
             client: profile.reference,
+            hidden: false,
             task: task.reference
         }).then(function () {
             console.log("Reply created!");
@@ -71,30 +76,67 @@ function TaskScreen() {
         });
     }
 
-    var repliesList = (() => {
+    function HideReply(entry) {
+        entry.reference.update({
+            hidden: true
+        }).then(function () {
+            entry.hidden = true;
+            setTask({ ...task });
+        }).catch(function (error) {
+            console.error("Error writing document: ", error);
+        });
+    }
+
+    function ApproveReply(entry) {
+        task.reference.update({
+            doer: entry.client.reference
+        }).then(function () {
+            history.push("/tasks");
+        }).catch(function (error) {
+            console.error("Error writing document: ", error);
+        });
+    }
+
+    const repliesList = (() => {
         if (!task)
             return null;
 
-        if (!profile.customer) {
-            task.replies = task.replies.filter((entry) => entry.client.reference.path === profile.reference.path)
-            if (!task.replies.length)
-                return (<div className="flex-column">
-                    <textarea className="form-input" placeholder="Опишите Вашу заявку..."
-                        value={reply} onChange={(event) => {
-                            setReply(event.target.value)
-                        }} />
-                    <button className="button" onClick={CreateReply}>Оставить заявку</button>
-                </div>)
+        if (task.doer)
+            task.replies = task.replies.filter((entry) => entry.client.reference.path === task.doer.path)
+        else {
+            if (!profile.customer) {
+                task.replies = task.replies.filter((entry) => entry.client.reference.path === profile.reference.path)
+                if (!task.replies.length)
+                    return (<div className="flex-column">
+                        <textarea className="form-input" placeholder="Опишите Вашу заявку..."
+                            value={reply} onChange={(event) => {
+                                setReply(event.target.value)
+                            }} />
+                        <button className="button" onClick={CreateReply}>Оставить заявку</button>
+                    </div>)
+            }
+            else task.replies = task.replies.filter((entry) => !entry.hidden)
         }
-        return (task.replies.map((reply, index) => (
+
+        return (task.replies.map((entry, index) => (
             <div className="flex-row reply-wrapper" key={index}>
-                <TextAvatar width="40" height="40" text={reply.client.name} />
+                <TextAvatar width="40" height="40" text={entry.client.name} />
                 <div className="flex-column flex-1 justify-between">
-                    <span className="semi-bold">{reply.client.name}</span>
+                    <span className="semi-bold">{entry.client.name}</span>
                     <div className="reply flex-column">
-                        <span>{reply.description}</span>
-                        <span className="timestamp">{moment(reply.created_at).fromNow()}</span>
+                        <span>{entry.description}</span>
+                        <span className="timestamp">{moment(entry.created_at).fromNow()}</span>
                     </div>
+                    {profile.customer && !task.doer ?
+                        <div className="flex-row">
+                            <button className="button" id="approve" onClick={() => { ApproveReply(entry) }}>
+                                <img src={approveIcon} alt="approve" />
+                            </button>
+                            <button className="button" id="hide" onClick={() => { HideReply(entry) }}>
+                                <img src={hideIcon} alt="hide" />
+                            </button>
+                        </div>
+                        : null}
                 </div>
             </div>
         )));
@@ -112,7 +154,7 @@ function TaskScreen() {
                 </div>
                 <span className="task-description">{task.description}</span>
                 <div className="flex-row justify-between bottom">
-                    <span className="regular">{task.replies.length} заявок</span>
+                    <span className="regular">{task.doer ? "Задача закрыта" : task.replies.length + " заявок"}</span>
                     <span className="regular">{moment(task.created_at).fromNow()}</span>
                 </div>
                 <hr />

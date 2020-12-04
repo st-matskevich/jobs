@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import ProfileScreen from "./ProfileScreen"
 import TasksScreen from "./TaskListScreen"
+import NotificationsScreen from "./NotificationsScreen"
 
 function MainRoute() {
 
@@ -23,7 +24,7 @@ function MainRoute() {
         },
         {
             path: "/notifications",
-            content: () => <p>Notifications</p>
+            content: () => <NotificationsScreen/>
         },
         {
             path: "/profile",

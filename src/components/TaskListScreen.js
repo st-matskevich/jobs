@@ -36,9 +36,13 @@ function TaskListScreen() {
             .then(function (querySnapshot) {
                 var queryTasks = [[], [], []]
                 querySnapshot.forEach(function (doc) {
+                    if (!profile.customer && doc.data().doer)
+                        return;
+
                     queryTasks[0].push({
                         name: doc.data().name,
                         description: doc.data().description,
+                        doer: doc.data().doer,
                         created_at: doc.data().created_at.toDate(),
                         id: doc.id,
                         reference: doc.ref
@@ -103,7 +107,7 @@ function TaskListScreen() {
                                 </div>
                             </div>
                             <div className="flex-row justify-between bottom">
-                                <span className="regular">{task.repliesCount} заявок</span>
+                                <span className="regular">{task.doer ? "Задача закрыта" : task.repliesCount + " заявок"}</span>
                                 <span className="regular">{moment(task.created_at).fromNow()}</span>
                             </div>
                         </Link>
