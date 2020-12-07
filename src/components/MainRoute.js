@@ -1,5 +1,4 @@
 import "./MainRoute.scss"
-import firebase from "firebase";
 import listIcon from "../svg/list-icon.svg"
 import listIconActive from "../svg/list-icon.active.svg"
 import notificationIcon from "../svg/notification-icon.svg"
@@ -12,27 +11,24 @@ import {
     Link,
     useRouteMatch
 } from "react-router-dom";
+import ProfileScreen from "./ProfileScreen"
+import TasksScreen from "./TaskListScreen"
+import NotificationsScreen from "./NotificationsScreen"
 
 function MainRoute() {
 
     const routes = [
         {
             path: "/tasks",
-            content: () => <p>List</p>
+            content: () => <TasksScreen/>
         },
         {
             path: "/notifications",
-            content: () => <p>Notifications</p>
+            content: () => <NotificationsScreen/>
         },
         {
             path: "/profile",
-            content: () =>
-                <div>
-                    <p>Profile</p>
-                    <button className="button" onClick={() => {
-                        firebase.auth().signOut()
-                    }}>Выйти</button>
-                </div>
+            content: () => <ProfileScreen/>
         }
     ];
 
@@ -44,7 +40,7 @@ function MainRoute() {
 
     return (
         <div className="main-wrapper">
-            <div className="main-content-wrapper">
+            <div className="main-content-wrapper flex-column">
                 <Switch>
                     {routes.map((route, index) =>
                         (

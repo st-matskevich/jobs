@@ -1,4 +1,4 @@
-export const UpdateUser = user => ({
-    type: 'UPDATE_USER',
-    payload: user
+export const UpdateProfile = profile => ({
+    type: 'UPDATE_PROFILE',
+    payload: profile
 })

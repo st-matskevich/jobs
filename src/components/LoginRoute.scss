@@ -29,22 +29,6 @@ $login-height: 180px;
     justify-content: space-between;
 }
 
-.login-input {
-    outline: none;
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    border-bottom: 1px solid #666666;
-    padding: 10px 0;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 300;
-
-    &:focus {
-        border-bottom-color: $primary-color;
-    }
-}
-
 .login-loader {
     border: 10px solid $primary-color;
     border-top: 10px solid transparent;

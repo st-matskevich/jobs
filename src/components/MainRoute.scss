@@ -8,10 +8,14 @@
 
 .main-content-wrapper {
     flex: 1;
+    position: relative;
+    display: flex;
+    overflow: hidden;
 }
 
 .bottom-navigator-wrapper {
     display: flex;
+    user-select: none;
 
     .tab {
         flex: 1;
