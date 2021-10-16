@@ -7,10 +7,13 @@ import {
 } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { useDispatch } from "react-redux";
-import { UpdateProfile } from "./actions/actions"
-import firebase from "firebase";
-import LoginRoute from './components/LoginRoute'
-import MainRoute from './components/MainRoute'
+import { UpdateProfile } from "./actions/actions";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import 'firebase/compat/firestore';
+
+import LoginRoute from './components/LoginRoute';
+import MainRoute from './components/MainRoute';
 
 function App() {
 

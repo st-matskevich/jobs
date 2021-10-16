@@ -4,7 +4,8 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import firebase from "firebase";
+import firebase from "firebase/compat/app";
+import "firebase/compat/analytics"
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'

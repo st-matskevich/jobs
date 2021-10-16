@@ -1,7 +1,8 @@
 import "./TaskScreen.scss";
 import { useParams, useHistory } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import firebase from "firebase";
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore';
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 import { useSelector } from "react-redux";
