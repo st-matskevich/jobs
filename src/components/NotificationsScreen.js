@@ -1,5 +1,6 @@
 import "./NotificationsScreen.scss";
-import firebase from "firebase";
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore';
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TextAvatar from "./TextAvatar";
