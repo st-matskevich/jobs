@@ -1,7 +1,5 @@
 import "./ProfileScreen.scss";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import 'firebase/compat/firestore';
+import firebase from "../api/firebase";
 import { useState } from 'react';
 import editIcon from "../svg/edit-icon.svg";
 import {
@@ -15,7 +13,7 @@ import TextAvatar from "./TextAvatar";
 
 function ProfileScreen() {
 
-    const user = firebase.auth().currentUser;
+    const user = firebase.GetAuth().currentUser;
     const profile = useSelector( state => state.profile);
     const [name, setName] = useState(profile && profile.name ? profile.name : "");
     const [customer, setCustomer] = useState(profile && profile.customer ? profile.customer : false);
@@ -57,7 +55,7 @@ function ProfileScreen() {
                         Изменить данные
                     </Link>
                     <button className="button" onClick={() => {
-                        firebase.auth().signOut()
+                        firebase.GetAuth().signOut()
                     }}>Выйти</button>
                 </div>
             </Route>

@@ -1,7 +1,8 @@
 import './LoginRoute.scss';
 import { useState, useEffect } from 'react';
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import firebase from "../api/firebase";
+import { signInWithPhoneNumber } from "firebase/auth";
+import { RecaptchaVerifier } from "firebase/auth";
 
 const LoginStages = {
     Phone: 0,
@@ -15,24 +16,20 @@ function LoginRoute(props) {
     const [usetInput, setUserInput] = useState("");
 
     useEffect(() => {
-        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('captcha', {
+        window.recaptchaVerifier = new RecaptchaVerifier('captcha', {
             'size': 'invisible',
-        });
+          }, firebase.GetAuth());
     }, []);
 
     function SignIn() {
         setLoading(true);
-        firebase.auth().signInWithPhoneNumber(usetInput, window.recaptchaVerifier)
-            .then(function (confirmationResult) {
-                // SMS sent. Prompt user to type the code from the message, then sign the
-                // user in with confirmationResult.confirm(code).
+        signInWithPhoneNumber(firebase.GetAuth(), usetInput, window.recaptchaVerifier)
+            .then((confirmationResult) => {
                 window.confirmationResult = confirmationResult;
                 setUserInput("")
                 setLoginStage(LoginStages.SMS);
                 setLoading(false);
-                console.log("SMS send");
-            }).catch(function (error) {
-                // Error; SMS not sent
+            }).catch((error) => {
                 setLoading(false);
                 console.error(error);
             });
@@ -41,12 +38,9 @@ function LoginRoute(props) {
 
     function ConfirmCode() {
         setLoading(true);
-        window.confirmationResult.confirm(usetInput).then(function (result) {
-            // User signed in successfully.
+        window.confirmationResult.confirm(usetInput).then(() => {
             setLoading(false);
-            console.log("Signed in");
-        }).catch(function (error) {
-            // User couldn't sign in (bad verification code?)
+        }).catch((error) => {
             setLoading(false);
             console.error(error);
         });
