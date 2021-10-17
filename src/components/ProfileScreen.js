@@ -1,5 +1,6 @@
 import "./ProfileScreen.scss";
 import firebase from "../api/firebase";
+import backend from "../api/backend";
 import { useState } from 'react';
 import editIcon from "../svg/edit-icon.svg";
 import {
@@ -8,29 +9,26 @@ import {
     Link,
     useHistory
 } from "react-router-dom";
-import { useSelector } from "react-redux";
 import TextAvatar from "./TextAvatar";
 
 function ProfileScreen() {
-
-    const user = firebase.GetAuth().currentUser;
-    const profile = useSelector( state => state.profile);
-    const [name, setName] = useState(profile && profile.name ? profile.name : "");
-    const [customer, setCustomer] = useState(profile && profile.customer ? profile.customer : false);
+    const [name, setName] = useState("");
+    const [customer, setCustomer] = useState(false);
     const history = useHistory();
+
+    const { profile, error } = backend.useUserProfile();
 
     function SaveProfileData() {
         if (!name)
             return;
 
-        firebase.firestore().collection("users").doc(user.uid).set({
+        backend.SetUserProfile({
             name: name,
             customer: customer,
         }).then(function () {
-            console.log("Profile updated!");
             history.push("/profile");
         }).catch(function (error) {
-            console.error("Error writing document: ", error);
+            console.log(error);
         });
     }
 

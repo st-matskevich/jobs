@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from 'react';
 
 var firebase = null;
@@ -28,7 +28,7 @@ function GetAuth() {
 }
 
 function useFirebaseAuthState() {
-    const [authState, setState] = useState({
+    const [state, setState] = useState({
         loaded: false,
         user: null
     });
@@ -44,7 +44,7 @@ function useFirebaseAuthState() {
         }
     }, []);
 
-    return authState
+    return state
 }
 
 export default { InitializeApp, GetApp, GetAuth, useFirebaseAuthState }
