@@ -83,7 +83,6 @@ function TaskListScreen() {
             customer: profile.reference,
             created_at: firebase.firestore.Timestamp.fromDate(new Date())
         }).then(function () {
-            console.log("Task created!");
             history.push("/tasks");
         }).catch(function (error) {
             console.error("Error writing document: ", error);

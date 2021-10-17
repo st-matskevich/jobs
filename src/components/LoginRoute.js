@@ -31,7 +31,7 @@ function LoginRoute(props) {
                 setLoading(false);
             }).catch((error) => {
                 setLoading(false);
-                console.error(error);
+                console.log(error);
             });
 
     }
@@ -42,7 +42,7 @@ function LoginRoute(props) {
             setLoading(false);
         }).catch((error) => {
             setLoading(false);
-            console.error(error);
+            console.log(error);
         });
 
     }

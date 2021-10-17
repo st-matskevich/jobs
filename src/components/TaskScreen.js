@@ -70,7 +70,6 @@ function TaskScreen() {
             hidden: false,
             task: task.reference
         }).then(function () {
-            console.log("Reply created!");
             history.push("/tasks/" + id);
         }).catch(function (error) {
             console.error("Error writing document: ", error);
