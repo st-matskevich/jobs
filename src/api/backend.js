@@ -33,11 +33,11 @@ function useUserProfile() {
     useEffect(() => {
         GetUserProfile()
             .then(response => {
-                setState({ ...state, profile: response.data })
+                setState(s => {return { ...s, profile: response.data }})
             })
             .catch(error => {
                 console.log(error)
-                setState({ ...state, profile: error.response.data })
+                setState(s => {return { ...s, error: error.response?.data }})
             })
     }, []);
 

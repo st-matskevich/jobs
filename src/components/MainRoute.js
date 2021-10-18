@@ -11,7 +11,7 @@ import {
     Link,
     useRouteMatch
 } from "react-router-dom";
-import ProfileScreen from "./ProfileScreen"
+import ProfileTab from "./ProfileTab"
 import TasksScreen from "./TaskListScreen"
 import NotificationsScreen from "./NotificationsScreen"
 
@@ -28,7 +28,7 @@ function MainRoute() {
         },
         {
             path: "/profile",
-            content: () => <ProfileScreen/>
+            content: () => <ProfileTab/>
         }
     ];
 

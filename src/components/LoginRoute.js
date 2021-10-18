@@ -10,7 +10,7 @@ const LoginStages = {
 }
 
 function LoginRoute(props) {
-
+    //TODO: state should probably be merged
     const [loading, setLoading] = useState(false);
     const [loginStage, setLoginStage] = useState(LoginStages.Phone);
     const [usetInput, setUserInput] = useState("");
