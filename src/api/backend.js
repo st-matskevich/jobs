@@ -2,10 +2,12 @@ import axios from 'axios';
 import firebase from './firebase';
 import { useState, useEffect } from 'react';
 
+const URL_BASE = process.env.REACT_APP_BACKEND_URL
+
 function GetUserProfile() {
     return firebase.GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.get('http://localhost:10000/profile', {
+            return axios.get(new URL('profile', URL_BASE), {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -16,7 +18,7 @@ function GetUserProfile() {
 function SetUserProfile(profile) {
     return firebase.GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.post('http://localhost:10000/profile', profile, {
+            return axios.post(new URL('profile', URL_BASE), profile, {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -47,7 +49,7 @@ function useUserProfile() {
 function GetTasksFeed() {
     return firebase.GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.get('http://localhost:10000/tasks', {
+            return axios.get(new URL('tasks', URL_BASE), {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -58,7 +60,7 @@ function GetTasksFeed() {
 function CreateTask(task) {
     return firebase.GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.post('http://localhost:10000/tasks', task, {
+            return axios.post(new URL('tasks', URL_BASE), task, {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
