@@ -12,7 +12,7 @@ import {
     useRouteMatch
 } from "react-router-dom";
 import ProfileTab from "./ProfileTab"
-import TasksScreen from "./TaskListScreen"
+import TasksTab from "./TasksTab"
 import NotificationsScreen from "./NotificationsScreen"
 
 function MainRoute() {
@@ -20,7 +20,7 @@ function MainRoute() {
     const routes = [
         {
             path: "/tasks",
-            content: () => <TasksScreen/>
+            content: () => <TasksTab/>
         },
         {
             path: "/notifications",
