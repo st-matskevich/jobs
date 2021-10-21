@@ -28,7 +28,7 @@ function TaskCreateComponent(props) {
                         }
                     })
                 }} />
-            <button className="button" onClick={props.onSubmit(input)}>Создать заказ</button>
+            <button className="button" onClick={() => { props.onSubmit(input) }}>Создать заказ</button>
         </div>
     )
 }
