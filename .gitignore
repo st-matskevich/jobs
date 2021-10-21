@@ -23,3 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
+
+# Firebase private key
+/src/api/firebase-config.js
+
+# Project env files
+*.env

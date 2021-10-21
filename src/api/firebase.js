@@ -1,19 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from 'react';
+import config from "./firebase-config"
 
 var firebase = null;
-
-var config = {
-    apiKey: "AIzaSyB2ayfhYcYE8NVM_7OQCoVCCdySLksLqtQ",
-    authDomain: "jobs-2d511.firebaseapp.com",
-    databaseURL: "https://jobs-2d511.firebaseio.com",
-    projectId: "jobs-2d511",
-    storageBucket: "jobs-2d511.appspot.com",
-    messagingSenderId: "133221531100",
-    appId: "1:133221531100:web:bd88985dea10dd74596319",
-    measurementId: "G-4E5J3ND6SF"
-};
 
 function InitializeApp() {
     firebase = initializeApp(config);
