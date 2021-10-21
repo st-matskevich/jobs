@@ -26,22 +26,65 @@ function SetUserProfile(profile) {
 
 function useUserProfile() {
     const [state, setState] = useState({
-        profile: null,
+        data: null,
         error: null
     });
 
     useEffect(() => {
         GetUserProfile()
             .then(response => {
-                setState(s => {return { ...s, profile: response.data }})
+                setState(s => { return { ...s, data: response.data } })
             })
             .catch(error => {
                 console.log(error)
-                setState(s => {return { ...s, error: error.response?.data }})
+                setState(s => { return { ...s, error: error.response?.data } })
             })
     }, []);
 
-    return state
+    return { ...state, loading: state.data == null && state.error == null }
 }
 
-export default { useUserProfile, SetUserProfile }
+function GetTasksFeed() {
+    return firebase.GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.get('http://localhost:10000/tasks', {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
+
+function CreateTask(task) {
+    return firebase.GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.post('http://localhost:10000/tasks', task, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
+
+//TODO: add pagination
+function useTasksFeed() {
+    const [state, setState] = useState({
+        data: null,
+        error: null
+    });
+
+    useEffect(() => {
+        GetTasksFeed()
+            .then(response => {
+                setState(s => { return { ...s, data: response.data } })
+            })
+            .catch(error => {
+                console.log(error)
+                setState(s => { return { ...s, error: error.response?.data } })
+            })
+    }, []);
+
+    return { ...state, loading: state.data == null && state.error == null }
+}
+
+export default { useUserProfile, SetUserProfile, useTasksFeed, CreateTask }

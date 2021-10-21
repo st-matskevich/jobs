@@ -10,10 +10,14 @@ import ProfileViewComponent from "./ProfileViewComponent";
 function ProfileTab() {
     const history = useHistory();
     //TODO: handle error
-    const { profile, error } = backend.useUserProfile();
+    const profile = backend.useUserProfile();
 
     function SaveProfileData(input) {
+        //TODO: handle errors
         if (!input.name)
+            return;
+
+        if (input.name.length > 32)
             return;
 
         backend.SetUserProfile({
@@ -29,10 +33,10 @@ function ProfileTab() {
     return (
         <Switch>
             <Route exact path="/profile">
-                <ProfileViewComponent profile={profile}></ProfileViewComponent>
+                <ProfileViewComponent profile={profile.data}></ProfileViewComponent>
             </Route>
             <Route path="/profile/edit">
-                <ProfileEditComponent profile={profile} onSubmit={SaveProfileData}></ProfileEditComponent>
+                <ProfileEditComponent profile={profile.data} onSubmit={SaveProfileData}></ProfileEditComponent>
             </Route>
         </Switch>
     );
