@@ -24,6 +24,7 @@ function TaskRoute() {
         CreateReply(id, input).then(function () {
             history.push("/tasks/" + id);
         }).catch(function (error) {
+            //TODO: handle errors
             console.log(error);
         });
     }
@@ -43,6 +44,7 @@ function TaskRoute() {
         SetTaskDoer(id, reply.creator.id).then(function () {
             history.push("/tasks/" + id);
         }).catch(function (error) {
+            //TODO: handle errors
             console.log(error);
         });
     }
@@ -50,7 +52,7 @@ function TaskRoute() {
     function RenderRepliesList() {
         if (task.data && replies.data)
             return (replies.data.all.map((reply) => (
-                <ReplyComponent key={reply.id} reply={reply} drawCustomerControls={task.data.owns} onApprove={ApproveReply} onHide={HideReply}/>
+                <ReplyComponent key={reply.id} reply={reply} drawCustomerControls={task.data.owns} onApprove={ApproveReply} onHide={HideReply} />
             )));
 
         return null
@@ -58,7 +60,7 @@ function TaskRoute() {
 
     function RenderCreateReplyComponent() {
         if (task.data && replies.data && !task.data.owns && !replies.data.user)
-            return (<ReplyCreateComponent onCreate={OnCreateReply}/>)
+            return (<ReplyCreateComponent onCreate={OnCreateReply} />)
         return null
     }
 

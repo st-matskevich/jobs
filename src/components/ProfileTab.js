@@ -13,7 +13,6 @@ function ProfileTab() {
     const profile = useUserProfile();
 
     function SaveProfileData(input) {
-        //TODO: handle errors
         if (!input.name)
             return;
 
@@ -26,6 +25,7 @@ function ProfileTab() {
         }).then(function () {
             history.push("/profile");
         }).catch(function (error) {
+            //TODO: handle errors
             console.log(error);
         });
     }
