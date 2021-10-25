@@ -48,7 +48,7 @@ function TasksTab() {
 
     function RenderTaskCreateComponent() {
         if (profile.data?.customer)
-            return (<TaskCreateComponent onSubmit={OnCreateTask} />)
+            return (<TaskCreateComponent onCreate={OnCreateTask} />)
 
         return null
     }
@@ -64,7 +64,7 @@ function TasksTab() {
         return null
     }
 
-    function RenderTaskListComponent() {
+    function RenderTaskList() {
         if (profile.data?.name && feed.data)
             return (
                 <div className="overflow-auto">
@@ -79,7 +79,7 @@ function TasksTab() {
         return null
     }
 
-    function RenderTaskComponent() {
+    function RenderTaskRoute() {
         if (profile.loading || profile.data?.name)
             return (<TaskRoute />)
         else return <Redirect to="/tasks" />
@@ -89,13 +89,13 @@ function TasksTab() {
         <Switch>
             <Route exact path="/tasks">
                 {RenderTaskCreateButton()}
-                {RenderTaskListComponent()}
+                {RenderTaskList()}
             </Route>
             <Route path="/tasks/add">
                 {RenderTaskCreateComponent()}
             </Route>
             <Route path="/tasks/:id">
-                {RenderTaskComponent()}
+                {RenderTaskRoute()}
             </Route>
         </Switch>
     );

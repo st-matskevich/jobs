@@ -2,6 +2,7 @@ import "./TasksTab.scss";
 import { useState } from 'react';
 
 function TaskCreateComponent(props) {
+    const onCreate = props.onCreate;
     const [input, setInput] = useState({
         name: "",
         description: ""
@@ -28,7 +29,7 @@ function TaskCreateComponent(props) {
                         }
                     })
                 }} />
-            <button className="button" onClick={() => { props.onSubmit(input) }}>Создать заказ</button>
+            <button className="button" onClick={() => { onCreate(input) }}>Создать заказ</button>
         </div>
     )
 }
