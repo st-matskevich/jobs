@@ -3,6 +3,11 @@ import { GetAuth } from './firebase';
 import { useState, useEffect } from 'react';
 
 const URL_BASE = process.env.REACT_APP_BACKEND_URL
+export const FEED_SCOPE = {
+    NOT_ASSIGNED: "NOT_ASSIGNED",
+    CUSTOMER: "CUSTOMER",
+    DOER: "DOER"
+}
 
 function GetUserProfile() {
     return GetAuth().currentUser.getIdToken()
@@ -46,10 +51,13 @@ export function useUserProfile() {
     return { ...state, loading: state.data == null && state.error == null }
 }
 
-function GetTasksFeed() {
+function GetTasksFeed(scope) {
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/tasks`, {
+                params: {
+                    scope: scope
+                },
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -79,15 +87,15 @@ export function CreateTask(task) {
         });
 }
 
-//TODO: add pagination an use of "scope" parameter
-export function useTasksFeed() {
+//TODO: add pagination
+export function useTasksFeed(scope) {
     const [state, setState] = useState({
         data: null,
         error: null
     });
 
     useEffect(() => {
-        GetTasksFeed()
+        GetTasksFeed(scope)
             .then(response => {
                 setState(s => { return { ...s, data: response.data } })
             })
@@ -95,7 +103,7 @@ export function useTasksFeed() {
                 console.log(error)
                 setState(s => { return { ...s, error: error.response?.data } })
             })
-    }, []);
+    }, [scope]);
 
     return { ...state, loading: state.data == null && state.error == null }
 }
@@ -120,6 +128,7 @@ export function useTask(taskID) {
     return { ...state, loading: state.data == null && state.error == null }
 }
 
+//TODO: add pagination
 function GetReplies(taskID) {
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
@@ -164,13 +173,13 @@ export function useReplies(taskID) {
 
 export function SetTaskDoer(taskID, userID) {
     return GetAuth().currentUser.getIdToken()
-    .then(idToken => {
-        return axios.post(`${URL_BASE}/tasks/${taskID}/doer`, {
-            id: userID
-        }, {
-            headers: {
-                Authorization: 'Bearer ' + idToken
-            }
-        })
-    });
+        .then(idToken => {
+            return axios.post(`${URL_BASE}/tasks/${taskID}/doer`, {
+                id: userID
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
 }

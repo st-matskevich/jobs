@@ -1,5 +1,5 @@
 import "./TasksTab.scss";
-import { useUserProfile, useTasksFeed, CreateTask } from "../api/backend";
+import { useUserProfile, useTasksFeed, CreateTask, FEED_SCOPE } from "../api/backend";
 import {
     Switch,
     Route,
@@ -20,10 +20,12 @@ function TasksTab() {
 
     //TODO: handle errors
     const profile = useUserProfile();
-    const feed = useTasksFeed();
+
+    //TODO: handle errors
+    const scope = profile.data?.customer ? FEED_SCOPE.CUSTOMER : FEED_SCOPE.NOT_ASSIGNED;
+    const feed = useTasksFeed(scope);
 
     function OnCreateTask(input) {
-        //TODO: handle errors
         if (!input.name)
             return;
 
@@ -42,6 +44,7 @@ function TasksTab() {
         }).then(function () {
             history.push("/tasks");
         }).catch(function (error) {
+            //TODO: handle errors
             console.log(error);
         });
     }
