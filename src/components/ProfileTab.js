@@ -1,4 +1,4 @@
-import backend from "../api/backend";
+import { useUserProfile, SetUserProfile } from "../api/backend";
 import {
     Switch,
     Route,
@@ -10,7 +10,7 @@ import ProfileViewComponent from "./ProfileViewComponent";
 function ProfileTab() {
     const history = useHistory();
     //TODO: handle error
-    const profile = backend.useUserProfile();
+    const profile = useUserProfile();
 
     function SaveProfileData(input) {
         //TODO: handle errors
@@ -20,7 +20,7 @@ function ProfileTab() {
         if (input.name.length > 32)
             return;
 
-        backend.SetUserProfile({
+        SetUserProfile({
             name: input.name,
             customer: input.customer,
         }).then(function () {

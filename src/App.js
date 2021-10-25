@@ -5,13 +5,13 @@ import {
     Route,
     Redirect
 } from "react-router-dom";
-import firebase from "./api/firebase";
+import { useFirebaseAuthState } from "./api/firebase";
 
 import LoginRoute from './components/LoginRoute';
 import MainRoute from './components/MainRoute';
 
 function App() {
-    const { loaded, user } = firebase.useFirebaseAuthState();
+    const { loaded, user } = useFirebaseAuthState();
 
     return (
         <div className="App">

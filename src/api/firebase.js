@@ -15,19 +15,19 @@ var config = {
     measurementId: "G-4E5J3ND6SF"
 };
 
-function InitializeApp() {
+export function InitializeApp() {
     firebase = initializeApp(config);
 }
 
-function GetApp() {
+export function GetApp() {
     return firebase;
 }
 
-function GetAuth() {
+export function GetAuth() {
     return getAuth(firebase);
 }
 
-function useFirebaseAuthState() {
+export function useFirebaseAuthState() {
     const [state, setState] = useState({
         loaded: false,
         user: null
@@ -46,5 +46,3 @@ function useFirebaseAuthState() {
 
     return state
 }
-
-export default { InitializeApp, GetApp, GetAuth, useFirebaseAuthState }

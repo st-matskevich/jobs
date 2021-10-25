@@ -4,13 +4,13 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import firebase from "./api/firebase";
+import { InitializeApp } from "./api/firebase";
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers/reducer'
 
-firebase.InitializeApp();
+InitializeApp();
 
 ReactDOM.render(
   <Provider store={createStore(reducer)}>

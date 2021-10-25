@@ -1,13 +1,13 @@
 import axios from 'axios';
-import firebase from './firebase';
+import { GetAuth } from './firebase';
 import { useState, useEffect } from 'react';
 
 const URL_BASE = process.env.REACT_APP_BACKEND_URL
 
 function GetUserProfile() {
-    return firebase.GetAuth().currentUser.getIdToken()
+    return GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.get(new URL('profile', URL_BASE), {
+            return axios.get(`${URL_BASE}/profile`, {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -15,10 +15,10 @@ function GetUserProfile() {
         });
 }
 
-function SetUserProfile(profile) {
-    return firebase.GetAuth().currentUser.getIdToken()
+export function SetUserProfile(profile) {
+    return GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.post(new URL('profile', URL_BASE), profile, {
+            return axios.post(`${URL_BASE}/profile`, profile, {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -26,7 +26,7 @@ function SetUserProfile(profile) {
         });
 }
 
-function useUserProfile() {
+export function useUserProfile() {
     const [state, setState] = useState({
         data: null,
         error: null
@@ -47,9 +47,9 @@ function useUserProfile() {
 }
 
 function GetTasksFeed() {
-    return firebase.GetAuth().currentUser.getIdToken()
+    return GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.get(new URL('tasks', URL_BASE), {
+            return axios.get(`${URL_BASE}/tasks`, {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -57,10 +57,10 @@ function GetTasksFeed() {
         });
 }
 
-function CreateTask(task) {
-    return firebase.GetAuth().currentUser.getIdToken()
+function GetTask(taskID) {
+    return GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.post(new URL('tasks', URL_BASE), task, {
+            return axios.get(`${URL_BASE}/tasks/${taskID}`, {
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
@@ -68,8 +68,19 @@ function CreateTask(task) {
         });
 }
 
-//TODO: add pagination
-function useTasksFeed() {
+export function CreateTask(task) {
+    return GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.post(`${URL_BASE}/tasks`, task, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
+
+//TODO: add pagination an use of "scope" parameter
+export function useTasksFeed() {
     const [state, setState] = useState({
         data: null,
         error: null
@@ -89,4 +100,64 @@ function useTasksFeed() {
     return { ...state, loading: state.data == null && state.error == null }
 }
 
-export default { useUserProfile, SetUserProfile, useTasksFeed, CreateTask }
+export function useTask(taskID) {
+    const [state, setState] = useState({
+        data: null,
+        error: null
+    });
+
+    useEffect(() => {
+        GetTask(taskID)
+            .then(response => {
+                setState(s => { return { ...s, data: response.data } })
+            })
+            .catch(error => {
+                console.log(error)
+                setState(s => { return { ...s, error: error.response?.data } })
+            })
+    }, [taskID]);
+
+    return { ...state, loading: state.data == null && state.error == null }
+}
+
+function GetReplies(taskID) {
+    return GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.get(`${URL_BASE}/tasks/${taskID}/replies`, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
+
+export function CreateReply(taskID, reply) {
+    return GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.post(`${URL_BASE}/tasks/${taskID}/replies`, reply, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
+
+export function useReplies(taskID) {
+    const [state, setState] = useState({
+        data: null,
+        error: null
+    });
+
+    useEffect(() => {
+        GetReplies(taskID)
+            .then(response => {
+                setState(s => { return { ...s, data: response.data } })
+            })
+            .catch(error => {
+                console.log(error)
+                setState(s => { return { ...s, error: error.response?.data } })
+            })
+    }, [taskID]);
+
+    return { ...state, loading: state.data == null && state.error == null }
+}

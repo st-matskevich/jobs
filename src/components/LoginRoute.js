@@ -1,6 +1,6 @@
 import './LoginRoute.scss';
 import { useState, useEffect } from 'react';
-import firebase from "../api/firebase";
+import { GetAuth } from "../api/firebase";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { RecaptchaVerifier } from "firebase/auth";
 
@@ -18,12 +18,12 @@ function LoginRoute(props) {
     useEffect(() => {
         window.recaptchaVerifier = new RecaptchaVerifier('captcha', {
             'size': 'invisible',
-          }, firebase.GetAuth());
+        }, GetAuth());
     }, []);
 
     function SignIn() {
         setLoading(true);
-        signInWithPhoneNumber(firebase.GetAuth(), usetInput, window.recaptchaVerifier)
+        signInWithPhoneNumber(GetAuth(), usetInput, window.recaptchaVerifier)
             .then((confirmationResult) => {
                 window.confirmationResult = confirmationResult;
                 setUserInput("")
@@ -58,7 +58,7 @@ function LoginRoute(props) {
         <div className="login-card">
             <div className="title">jobs</div>
             <div id="captcha"></div>
-            { props.loading || loading ?
+            {props.loading || loading ?
                 <div className="loader-wrapper">
                     <div className="login-loader"></div>
                 </div>

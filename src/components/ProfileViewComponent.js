@@ -2,11 +2,11 @@ import "./ProfileViewComponent.scss";
 import TextAvatar from "./TextAvatar";
 import { Link } from "react-router-dom";
 import editIcon from "../svg/edit-icon.svg";
-import firebase from "../api/firebase";
+import { GetAuth } from "../api/firebase";
 
 function ProfileViewComponent(props) {
     const profile = props.profile
-    
+
     return (
         <div className="card">
             {
@@ -26,7 +26,7 @@ function ProfileViewComponent(props) {
                 Изменить данные
             </Link>
             <button className="button" onClick={() => {
-                firebase.GetAuth().signOut()
+                GetAuth().signOut()
             }}>Выйти</button>
         </div>
     );
