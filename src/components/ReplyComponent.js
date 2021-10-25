@@ -21,10 +21,10 @@ function ReplyComponent(props) {
                 </div>
                 {customer ?
                     <div className="flex-row">
-                        <button className="button" id="approve" onClick={() => { onApprove(reply.id) }}>
+                        <button className="button" id="approve" onClick={() => { onApprove(reply) }}>
                             <img src={approveIcon} alt="approve" />
                         </button>
-                        <button className="button" id="hide" onClick={() => { onHide(reply.id) }}>
+                        <button className="button" id="hide" onClick={() => { onHide(reply) }}>
                             <img src={hideIcon} alt="hide" />
                         </button>
                     </div>

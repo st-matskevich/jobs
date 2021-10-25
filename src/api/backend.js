@@ -161,3 +161,16 @@ export function useReplies(taskID) {
 
     return { ...state, loading: state.data == null && state.error == null }
 }
+
+export function SetTaskDoer(taskID, userID) {
+    return GetAuth().currentUser.getIdToken()
+    .then(idToken => {
+        return axios.post(`${URL_BASE}/tasks/${taskID}/doer`, {
+            id: userID
+        }, {
+            headers: {
+                Authorization: 'Bearer ' + idToken
+            }
+        })
+    });
+}

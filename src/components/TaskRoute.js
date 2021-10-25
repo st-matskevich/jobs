@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import TaskComponent from "./TaskComponent";
 import ReplyComponent from "./ReplyComponent";
 import ReplyCreateComponent from "./ReplyCreateComponent";
-import { useTask, useReplies, CreateReply } from "../api/backend"
+import { useTask, useReplies, CreateReply, SetTaskDoer } from "../api/backend"
 
 function TaskRoute() {
 
@@ -12,7 +12,7 @@ function TaskRoute() {
 
     //TODO: handle errors
     const task = useTask(id);
-    const replies = useReplies(id);
+    const replies = useReplies(id);;
 
     function OnCreateReply(input) {
         if (!input.text)
@@ -21,14 +21,14 @@ function TaskRoute() {
         if (!task.data?.id)
             return;
 
-        CreateReply(task.data.id, input).then(function () {
+        CreateReply(id, input).then(function () {
             history.push("/tasks/" + id);
         }).catch(function (error) {
             console.log(error);
         });
     }
 
-    function HideReply(entry) {
+    function HideReply(reply) {
         /*entry.reference.update({
             hidden: true
         }).then(function () {
@@ -39,14 +39,12 @@ function TaskRoute() {
         });*/
     }
 
-    function ApproveReply(entry) {
-        /*task.reference.update({
-            doer: entry.client.reference
-        }).then(function () {
-            history.push("/tasks");
+    function ApproveReply(reply) {
+        SetTaskDoer(id, reply.creator.id).then(function () {
+            history.push("/tasks/" + id);
         }).catch(function (error) {
-            console.error("Error writing document: ", error);
-        });*/
+            console.log(error);
+        });
     }
 
     function RenderRepliesList() {
