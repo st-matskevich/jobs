@@ -1,23 +1,20 @@
 import "./TaskRoute.scss";
 import { useParams, useHistory } from "react-router-dom";
-import { useState } from 'react';
 import TaskComponent from "./TaskComponent";
 import ReplyComponent from "./ReplyComponent";
-
+import ReplyCreateComponent from "./ReplyCreateComponent";
 import { useTask, useReplies, CreateReply } from "../api/backend"
 
 function TaskRoute() {
 
     const { id } = useParams();
     const history = useHistory();
-    const [input, setInput] = useState({
-        text: ""
-    });
 
+    //TODO: handle errors
     const task = useTask(id);
     const replies = useReplies(id);
 
-    function OnCreateReply() {
+    function OnCreateReply(input) {
         if (!input.text)
             return;
 
@@ -52,7 +49,7 @@ function TaskRoute() {
         });*/
     }
 
-    function RenderRepliesListComponent() {
+    function RenderRepliesList() {
         if (task.data && replies.data)
             return (replies.data.all.map((reply) => (
                 <ReplyComponent key={reply.id} reply={reply} drawCustomerControls={task.data.owns} onApprove={ApproveReply} onHide={HideReply}/>
@@ -63,21 +60,7 @@ function TaskRoute() {
 
     function RenderCreateReplyComponent() {
         if (task.data && replies.data && !task.data.owns && !replies.data.user)
-            return (
-                <div className="flex-column">
-                    <textarea className="form-input" placeholder="Опишите Вашу заявку..."
-                        value={input.text} onChange={(event) => {
-                            setInput(i => {
-                                return {
-                                    ...i,
-                                    text: event.target.value
-                                }
-                            })
-                        }} />
-                    <button className="button" onClick={OnCreateReply}>Оставить заявку</button>
-                </div>
-            )
-
+            return (<ReplyCreateComponent onCreate={OnCreateReply}/>)
         return null
     }
 
@@ -88,7 +71,7 @@ function TaskRoute() {
                     <span className="task-description">{task.data.description}</span>
                 </TaskComponent>
                 <hr />
-                {RenderRepliesListComponent()}
+                {RenderRepliesList()}
                 {RenderCreateReplyComponent()}
             </div>
         </div>
