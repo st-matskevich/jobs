@@ -33,10 +33,10 @@ function ProfileTab() {
     return (
         <Switch>
             <Route exact path="/profile">
-                <ProfileViewComponent profile={profile.data}></ProfileViewComponent>
+                <ProfileViewComponent profile={profile.data}/>
             </Route>
             <Route path="/profile/edit">
-                <ProfileEditComponent profile={profile.data} onSubmit={SaveProfileData}></ProfileEditComponent>
+                <ProfileEditComponent profile={profile.data} onSubmit={SaveProfileData}/>
             </Route>
         </Switch>
     );

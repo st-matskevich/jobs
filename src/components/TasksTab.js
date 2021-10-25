@@ -1,5 +1,5 @@
 import "./TasksTab.scss";
-import backend from "../api/backend";
+import { useUserProfile, useTasksFeed, CreateTask } from "../api/backend";
 import {
     Switch,
     Route,
@@ -9,20 +9,20 @@ import {
 } from "react-router-dom";
 import addIcon from "../svg/add-icon.svg";
 import TaskCreateComponent from "./TaskCreateComponent";
-import TaskScreen from "./TaskScreen";
+import TaskRoute from "./TaskRoute";
 import moment from 'moment';
 import 'moment/locale/ru';
-import TaskListComponent from "./TasksListComponent";
+import TaskComponent from "./TaskComponent";
 
 function TasksTab() {
     const history = useHistory();
     moment.locale('ru')
 
     //TODO: handle errors
-    const profile = backend.useUserProfile();
-    const feed = backend.useTasksFeed();
+    const profile = useUserProfile();
+    const feed = useTasksFeed();
 
-    function CreateTask(input) {
+    function OnCreateTask(input) {
         //TODO: handle errors
         if (!input.name)
             return;
@@ -36,7 +36,7 @@ function TasksTab() {
         if (input.description.length > 512)
             return;
 
-        backend.CreateTask({
+        CreateTask({
             name: input.name,
             description: input.description,
         }).then(function () {
@@ -47,26 +47,42 @@ function TasksTab() {
     }
 
     function RenderTaskCreateComponent() {
-        if (!profile.loading && profile.data?.customer)
-            return (<TaskCreateComponent onSubmit={CreateTask}></TaskCreateComponent>)
+        if (profile.data?.customer)
+            return (<TaskCreateComponent onSubmit={OnCreateTask} />)
 
         return null
     }
 
     function RenderTaskCreateButton() {
-        if (!profile.loading && profile.data?.customer)
-            return (<Link to="/tasks/add" className="add-task">
-                <img src={addIcon} alt="list" />
-            </Link>)
+        if (profile.data?.customer)
+            return (
+                <Link to="/tasks/add" className="add-task">
+                    <img src={addIcon} alt="list" />
+                </Link>
+            )
 
         return null
     }
 
     function RenderTaskListComponent() {
-        if (!profile.loading && profile.data?.name.length)
-            return (<TaskListComponent feed={feed.data}></TaskListComponent>)
+        if (profile.data?.name && feed.data)
+            return (
+                <div className="overflow-auto">
+                    {feed.data.map((task) => (
+                        <Link className="card task-card" key={task.id} to={"/tasks/" + task.id}>
+                            <TaskComponent task={task} />
+                        </Link>
+                    ))}
+                </div>
+            )
 
         return null
+    }
+
+    function RenderTaskComponent() {
+        if (profile.loading || profile.data?.name)
+            return (<TaskRoute />)
+        else return <Redirect to="/tasks" />
     }
 
     return (
@@ -78,7 +94,9 @@ function TasksTab() {
             <Route path="/tasks/add">
                 {RenderTaskCreateComponent()}
             </Route>
-            {profile.data ? <Route path="/tasks/:id" children={<TaskScreen />}></Route> : <Redirect to="/tasks" />}
+            <Route path="/tasks/:id">
+                {RenderTaskComponent()}
+            </Route>
         </Switch>
     );
 }
