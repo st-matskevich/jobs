@@ -1,4 +1,4 @@
-import "./TasksTab.scss";
+import "./TasksListTab.scss";
 import { useState } from 'react';
 
 function TaskCreateComponent(props) {

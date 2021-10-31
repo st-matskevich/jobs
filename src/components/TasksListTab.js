@@ -1,4 +1,4 @@
-import "./TasksTab.scss";
+import "./TasksListTab.scss";
 import { useUserProfile, useTasksFeed, CreateTask, FEED_SCOPE } from "../api/backend";
 import {
     Switch,
@@ -14,7 +14,7 @@ import moment from 'moment';
 import 'moment/locale/ru';
 import TaskComponent from "./TaskComponent";
 
-function TasksTab() {
+function TasksListTab() {
     const history = useHistory();
     moment.locale('ru')
 
@@ -104,4 +104,4 @@ function TasksTab() {
     );
 }
 
-export default TasksTab;
+export default TasksListTab;
