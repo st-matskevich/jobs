@@ -171,10 +171,10 @@ export function useReplies(taskID) {
     return { ...state, loading: state.data == null && state.error == null }
 }
 
-export function SetTaskDoer(taskID, userID) {
+export function CloseTask(taskID, userID) {
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
-            return axios.post(`${URL_BASE}/tasks/${taskID}/doer`, {
+            return axios.post(`${URL_BASE}/tasks/${taskID}/close`, {
                 id: userID
             }, {
                 headers: {

@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import TaskComponent from "./TaskComponent";
 import ReplyComponent from "./ReplyComponent";
 import ReplyCreateComponent from "./ReplyCreateComponent";
-import { useTask, useReplies, CreateReply, SetTaskDoer } from "../api/backend"
+import { useTask, useReplies, CreateReply, CloseTask } from "../api/backend"
 
 function TaskRoute() {
 
@@ -41,7 +41,7 @@ function TaskRoute() {
     }
 
     function ApproveReply(reply) {
-        SetTaskDoer(id, reply.creator.id).then(function () {
+        CloseTask(id, reply.creator.id).then(function () {
             history.push("/tasks/" + id);
         }).catch(function (error) {
             //TODO: handle errors
