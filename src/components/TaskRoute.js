@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import TaskComponent from "./TaskComponent";
 import ReplyComponent from "./ReplyComponent";
 import ReplyCreateComponent from "./ReplyCreateComponent";
-import { useTask, useReplies, CreateReply, CloseTask } from "../api/backend"
+import { useTask, useReplies, CreateReply, CloseTask, HideReply } from "../api/backend"
 
 function TaskRoute() {
 
@@ -12,7 +12,7 @@ function TaskRoute() {
 
     //TODO: handle errors
     const task = useTask(id);
-    const replies = useReplies(id);;
+    const replies = useReplies(id);
 
     function OnCreateReply(input) {
         if (!input.text)
@@ -29,18 +29,16 @@ function TaskRoute() {
         });
     }
 
-    function HideReply(reply) {
-        /*entry.reference.update({
-            hidden: true
-        }).then(function () {
-            entry.hidden = true;
-            setTask({ ...task });
+    function OnHideReply(reply) {
+        HideReply(id, reply.id).then(function () {
+            history.push("/tasks/" + id);
         }).catch(function (error) {
-            console.error("Error writing document: ", error);
-        });*/
+            //TODO: handle errors
+            console.log(error);
+        });
     }
 
-    function ApproveReply(reply) {
+    function OnApproveReply(reply) {
         CloseTask(id, reply.creator.id).then(function () {
             history.push("/tasks/" + id);
         }).catch(function (error) {
@@ -59,7 +57,7 @@ function TaskRoute() {
                 return (<ReplyComponent reply={replies.data.user} />)
 
             return (replies.data.all.map((reply) => (
-                <ReplyComponent key={reply.id} reply={reply} drawCustomerControls={task.data.owns} onApprove={ApproveReply} onHide={HideReply} />
+                <ReplyComponent key={reply.id} reply={reply} drawCustomerControls={task.data.owns} onApprove={OnApproveReply} onHide={OnHideReply} />
             )));
         }
 

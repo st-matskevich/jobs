@@ -183,3 +183,14 @@ export function CloseTask(taskID, userID) {
             })
         });
 }
+
+export function HideReply(taskID, replyID) {
+    return GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.delete(`${URL_BASE}/tasks/${taskID}/replies/${replyID}`, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
