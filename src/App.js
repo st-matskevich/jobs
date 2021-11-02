@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import { useFirebaseAuthState } from "./api/firebase";
 
-import LoginRoute from './components/LoginRoute';
-import MainRoute from './components/MainRoute';
+import LoginPage from './components/LoginPage';
+import HomeTabsNavigator from './components/HomeTabsNavigator';
 
 function App() {
     const { loaded, user } = useFirebaseAuthState();
@@ -17,13 +17,13 @@ function App() {
         <div className="App">
             <Router>
                 {!loaded ?
-                    <LoginRoute loading={!loaded} /> :
+                    <LoginPage loading={!loaded} /> :
                     <Switch>
                         <Route exact path="/">
-                            {user ? <Redirect to="/tasks" /> : <LoginRoute />}
+                            {user ? <Redirect to="/tasks" /> : <LoginPage />}
                         </Route>
                         <Route path="/:section">
-                            {user ? <MainRoute /> : <Redirect to="/" />}
+                            {user ? <HomeTabsNavigator /> : <Redirect to="/" />}
                         </Route>
                     </Switch>
                 }

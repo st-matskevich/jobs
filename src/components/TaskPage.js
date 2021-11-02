@@ -1,11 +1,11 @@
-import "./TaskRoute.scss";
+import "./TaskPage.scss";
 import { useParams, useHistory } from "react-router-dom";
 import TaskComponent from "./TaskComponent";
 import ReplyComponent from "./ReplyComponent";
 import ReplyCreateComponent from "./ReplyCreateComponent";
 import { useTask, useReplies, CreateReply, CloseTask, HideReply } from "../api/backend"
 
-function TaskRoute() {
+function TaskPage() {
 
     const { id } = useParams();
     const history = useHistory();
@@ -84,4 +84,4 @@ function TaskRoute() {
     ) : null
 }
 
-export default TaskRoute;
+export default TaskPage;

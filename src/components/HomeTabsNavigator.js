@@ -1,4 +1,4 @@
-import "./MainRoute.scss"
+import "./HomeTabsNavigator.scss"
 import listIcon from "../svg/list-icon.svg"
 import listIconActive from "../svg/list-icon.active.svg"
 import notificationIcon from "../svg/notification-icon.svg"
@@ -11,24 +11,24 @@ import {
     Link,
     useRouteMatch
 } from "react-router-dom";
-import ProfileTab from "./ProfileTab"
-import TasksListTab from "./TasksListTab"
-import NotificationsTab from "./NotificationsTab"
+import ProfilePage from "./ProfilePage"
+import TasksFeedPage from "./TasksFeedPage"
+import NotificationsPage from "./NotificationsPage"
 
-function MainRoute() {
+function HomeTabsNavigator() {
 
     const routes = [
         {
             path: "/tasks",
-            content: () => <TasksListTab/>
+            content: () => <TasksFeedPage/>
         },
         {
             path: "/notifications",
-            content: () => <NotificationsTab/>
+            content: () => <NotificationsPage/>
         },
         {
             path: "/profile",
-            content: () => <ProfileTab/>
+            content: () => <ProfilePage/>
         }
     ];
 
@@ -69,4 +69,4 @@ function MainRoute() {
     )
 }
 
-export default MainRoute;
+export default HomeTabsNavigator;

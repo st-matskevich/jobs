@@ -1,11 +1,11 @@
-import "./NotificationsTab.scss";
-import "./TaskRoute.scss";
+import "./NotificationsPage.scss";
+import "./TaskPage.scss";
 import { Link } from "react-router-dom";
 import { useUserProfile, useNotifications, NOTIFICATIONS_TYPES } from "../api/backend"
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 
-function NotificationsTab() {
+function NotificationsPage() {
 
     const profile = useUserProfile();
     const notifications = useNotifications();
@@ -62,4 +62,4 @@ function NotificationsTab() {
     return RenderNotificationsList();
 }
 
-export default NotificationsTab;
+export default NotificationsPage;

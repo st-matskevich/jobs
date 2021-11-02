@@ -1,4 +1,4 @@
-import "./TasksListTab.scss";
+import "./TasksFeedPage.scss";
 import { useUserProfile, useTasksFeed, CreateTask, FEED_SCOPE } from "../api/backend";
 import {
     Switch,
@@ -9,12 +9,12 @@ import {
 } from "react-router-dom";
 import addIcon from "../svg/add-icon.svg";
 import TaskCreateComponent from "./TaskCreateComponent";
-import TaskRoute from "./TaskRoute";
+import TaskPage from "./TaskPage";
 import moment from 'moment';
 import 'moment/locale/ru';
 import TaskComponent from "./TaskComponent";
 
-function TasksListTab() {
+function TasksFeedPage() {
     const history = useHistory();
     moment.locale('ru')
 
@@ -82,9 +82,9 @@ function TasksListTab() {
         return null
     }
 
-    function RenderTaskRoute() {
+    function RenderTaskPage() {
         if (profile.loading || profile.data?.name)
-            return (<TaskRoute />)
+            return (<TaskPage />)
         else return <Redirect to="/tasks" />
     }
 
@@ -98,10 +98,10 @@ function TasksListTab() {
                 {RenderTaskCreateComponent()}
             </Route>
             <Route path="/tasks/:id">
-                {RenderTaskRoute()}
+                {RenderTaskPage()}
             </Route>
         </Switch>
     );
 }
 
-export default TasksListTab;
+export default TasksFeedPage;

@@ -1,4 +1,4 @@
-import './LoginRoute.scss';
+import './LoginPage.scss';
 import { useState, useEffect } from 'react';
 import { GetAuth } from "../api/firebase";
 import { signInWithPhoneNumber } from "firebase/auth";
@@ -9,7 +9,7 @@ const LoginStages = {
     SMS: 1
 }
 
-function LoginRoute(props) {
+function LoginPage(props) {
     //TODO: state should probably be merged
     const [loading, setLoading] = useState(false);
     const [loginStage, setLoginStage] = useState(LoginStages.Phone);
@@ -76,4 +76,4 @@ function LoginRoute(props) {
     );
 }
 
-export default LoginRoute;
+export default LoginPage;

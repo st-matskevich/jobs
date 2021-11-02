@@ -1,4 +1,4 @@
-import "./TasksListTab.scss";
+import "./TasksFeedPage.scss";
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 

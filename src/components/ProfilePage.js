@@ -7,7 +7,7 @@ import {
 import ProfileEditComponent from "./ProfileEditComponent";
 import ProfileViewComponent from "./ProfileViewComponent";
 
-function ProfileTab() {
+function ProfilePage() {
     const history = useHistory();
     //TODO: handle error
     const profile = useUserProfile();
@@ -42,4 +42,4 @@ function ProfileTab() {
     );
 }
 
-export default ProfileTab;
+export default ProfilePage;

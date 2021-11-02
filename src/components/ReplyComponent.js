@@ -1,4 +1,4 @@
-import "./TaskRoute.scss";
+import "./TaskPage.scss";
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 import approveIcon from "../svg/approve-icon.svg"
