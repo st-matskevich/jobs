@@ -1,7 +1,7 @@
 import "./NotificationsTab.scss";
 import "./TaskRoute.scss";
 import { Link } from "react-router-dom";
-import { useUserProfile, useNotifications } from "../api/backend"
+import { useUserProfile, useNotifications, NOTIFICATIONS_TYPES } from "../api/backend"
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 
@@ -15,7 +15,7 @@ function NotificationsTab() {
             return (
                 <div className="overflow-auto">
                     {notifications.data.map((entry) => {
-                        if (entry.type === 10000) {
+                        if (entry.type === NOTIFICATIONS_TYPES.NEW_REPLY) {
                             return (
                                 <Link className="card task-card" to={"/tasks/" + entry.content.task.id} key={entry.id}>
                                     <span className="semi-bold background">{entry.content.task.name}</span>
@@ -31,7 +31,7 @@ function NotificationsTab() {
                                         </div>
                                     </div>
                                 </Link>)
-                        } else if (entry.type === 0) {
+                        } else if (entry.type === NOTIFICATIONS_TYPES.TASK_CLOSE) {
                             return (
                                 <Link className="card task-card" to={"/tasks/" + entry.content.id} key={entry.id}>
                                     <div className="flex-column">

@@ -3,10 +3,16 @@ import { GetAuth } from './firebase';
 import { useState, useEffect } from 'react';
 
 const URL_BASE = process.env.REACT_APP_BACKEND_URL
+
 export const FEED_SCOPE = {
     NOT_ASSIGNED: "NOT_ASSIGNED",
     CUSTOMER: "CUSTOMER",
     DOER: "DOER"
+}
+
+export const NOTIFICATIONS_TYPES = {
+    TASK_CLOSE: 0,
+    NEW_REPLY: 10000
 }
 
 function GetUserProfile() {
