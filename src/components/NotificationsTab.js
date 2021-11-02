@@ -1,12 +1,6 @@
 import "./NotificationsTab.scss";
 import "./TaskRoute.scss";
-import {
-    Switch,
-    Route,
-    Link,
-    Redirect,
-    useHistory
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useUserProfile, useNotifications } from "../api/backend"
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
@@ -23,7 +17,7 @@ function NotificationsTab() {
                     {notifications.data.map((entry) => {
                         if (entry.type == 10000) {
                             return (
-                                <Link className="card task-card"  to={"/tasks/" + entry.content.task.id} key={entry.id}>
+                                <Link className="card task-card" to={"/tasks/" + entry.content.task.id} key={entry.id}>
                                     <span className="semi-bold background">{entry.content.task.name}</span>
                                     <span className="regular background new-reply">Новая заявка</span>
                                     <div className="flex-row reply-wrapper">
