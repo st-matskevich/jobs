@@ -63,44 +63,6 @@ function NotificationsTab() {
         return null
     }
 
-    /*const notificationsUI = (() => {
-        if (!notifications)
-            return null;
- 
-        return notifications.map((entry, index) => {
-            if (entry.type == "NEW_REPLY") {
-                return (
-                    <div className="card notification-card" key={index}>
-                        <span className="semi-bold background">Новая заявка</span>
-                        <span className="regular background">{entry.data.task.name}</span>
-                        <div className="flex-row reply-wrapper">
-                            <TextAvatar width="40" height="40" text={entry.data.doer.name} />
-                            <div className="flex-column flex-1 justify-between">
-                                <span className="semi-bold background">{entry.data.doer.name}</span>
-                                <div className="reply flex-column">
-                                    <span className="background">{entry.data.description}</span>
-                                    <span className="timestamp">{moment(entry.data.created_at).fromNow()}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>)
-            } else if (entry.type == "APPROVE") {
-                return (
-                    <div className="card notification-card" key={index}>
-                        <div className="flex-row reply-wrapper">
-                            <TextAvatar width="40" height="40" text={entry.data.customer.name} />
-                            <div className="flex-column flex-1 justify-between">
-                                <span className="semi-bold background">{entry.data.name}</span>
-                                <span className="background">{entry.data.customer.name}</span>
-                            </div>
-                        </div>
-                        <span className="approve-text background">Заказчик выбрал Вас исполнителем!</span>
-                        <span className="timestamp">{moment(entry.data.created_at).fromNow()}</span>
-                    </div>)
-            }
-        });
-    })();*/
-
     return RenderNotificationsList();
 }
 
