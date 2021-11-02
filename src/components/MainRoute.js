@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 import ProfileTab from "./ProfileTab"
 import TasksListTab from "./TasksListTab"
-import NotificationsScreen from "./NotificationsScreen"
+import NotificationsTab from "./NotificationsTab"
 
 function MainRoute() {
 
@@ -24,7 +24,7 @@ function MainRoute() {
         },
         {
             path: "/notifications",
-            content: () => <NotificationsScreen/>
+            content: () => <NotificationsTab/>
         },
         {
             path: "/profile",

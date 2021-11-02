@@ -1,0 +1,7 @@
+@import "../scss/common.scss";
+
+.task-card {
+    & .approve-text, & .new-reply {
+        margin-top: 10px;
+    }
+}

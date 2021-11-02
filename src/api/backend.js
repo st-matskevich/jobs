@@ -194,3 +194,35 @@ export function HideReply(taskID, replyID) {
             })
         });
 }
+
+//TODO: add pagination
+function GetNotifications() {
+    return GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.get(`${URL_BASE}/notifications`, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
+
+export function useNotifications() {
+    const [state, setState] = useState({
+        data: null,
+        error: null
+    });
+
+    useEffect(() => {
+        GetNotifications()
+            .then(response => {
+                setState(s => { return { ...s, data: response.data } })
+            })
+            .catch(error => {
+                console.log(error)
+                setState(s => { return { ...s, error: error.response?.data } })
+            })
+    }, []);
+
+    return { ...state, loading: state.data == null && state.error == null }
+}
