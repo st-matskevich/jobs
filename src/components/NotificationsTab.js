@@ -15,7 +15,7 @@ function NotificationsTab() {
             return (
                 <div className="overflow-auto">
                     {notifications.data.map((entry) => {
-                        if (entry.type == 10000) {
+                        if (entry.type === 10000) {
                             return (
                                 <Link className="card task-card" to={"/tasks/" + entry.content.task.id} key={entry.id}>
                                     <span className="semi-bold background">{entry.content.task.name}</span>
@@ -31,9 +31,9 @@ function NotificationsTab() {
                                         </div>
                                     </div>
                                 </Link>)
-                        } else if (entry.type == 0) {
+                        } else if (entry.type === 0) {
                             return (
-                                <Link className="card task-card" key={entry.id} to={"/tasks/" + entry.content.id} key={entry.id}>
+                                <Link className="card task-card" to={"/tasks/" + entry.content.id} key={entry.id}>
                                     <div className="flex-column">
                                         <div className="flex-row">
                                             <TextAvatar width="40" height="40" text={entry.content.customer.name} />
@@ -50,6 +50,8 @@ function NotificationsTab() {
                                     </div>
                                 </Link>)
                         }
+
+                        return null
                     })}
                 </div>
             )
