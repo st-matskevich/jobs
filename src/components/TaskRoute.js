@@ -48,17 +48,17 @@ function TaskRoute() {
     }
 
     function RenderRepliesList() {
-        if (task.data && replies.data)
-        {
-            if(task.data.owns && replies.data.doer)
+        if (task.data && replies.data) {
+            if (task.data.owns && replies.data.doer)
                 return (<ReplyComponent reply={replies.data.doer} />)
 
-            if(replies.data.user)
+            if (replies.data.user)
                 return (<ReplyComponent reply={replies.data.user} />)
 
-            return (replies.data.all.map((reply) => (
-                <ReplyComponent key={reply.id} reply={reply} drawCustomerControls={task.data.owns} onApprove={OnApproveReply} onHide={OnHideReply} />
-            )));
+            if (replies.data.all)
+                return (replies.data.all.map((reply) => (
+                    <ReplyComponent key={reply.id} reply={reply} drawCustomerControls={task.data.owns} onApprove={OnApproveReply} onHide={OnHideReply} />
+                )));
         }
 
         return null
