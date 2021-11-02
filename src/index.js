@@ -6,18 +6,12 @@ import reportWebVitals from './reportWebVitals';
 
 import { InitializeApp } from "./api/firebase";
 
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import reducer from './reducers/reducer'
-
 InitializeApp();
 
 ReactDOM.render(
-  <Provider store={createStore(reducer)}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
