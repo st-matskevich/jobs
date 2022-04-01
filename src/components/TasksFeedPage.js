@@ -32,6 +32,15 @@ function TasksFeedPage() {
         if (input.name.length > 128)
             return;
 
+        if(!input.tags)
+            return;
+
+        if(input.tags.length < 1)
+            return;
+
+        if(input.tags.length > 5)
+            return;
+
         if (!input.description)
             return;
 
@@ -41,6 +50,7 @@ function TasksFeedPage() {
         CreateTask({
             name: input.name,
             description: input.description,
+            tags: input.tags
         }).then(function () {
             history.push("/tasks");
         }).catch(function (error) {
