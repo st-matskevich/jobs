@@ -3,7 +3,20 @@ import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 
 function TaskComponent(props) {
-    const task = props.task;
+    const task = props.task;  
+
+    function RenderTaskTags() {
+        if(task.tags?.length > 0)
+        {
+            return (
+                <div className="flex-row tags-container">
+                    {task.tags.map((tag) => (
+                        <span className="tag" key={tag.id} >{tag.name}</span>
+                    ))}
+                </div>
+            )
+        }
+    }
 
     return (
         <div className="flex-column">
@@ -14,6 +27,7 @@ function TaskComponent(props) {
                     <span className="regular">{task.customer.name}</span>
                 </div>
             </div>
+            {RenderTaskTags()}
             {props.children}
             <div className="flex-row justify-between bottom">
                 <span className="regular">{task.closed ? "Задача закрыта" : task.repliesCount + " заявок"}</span>

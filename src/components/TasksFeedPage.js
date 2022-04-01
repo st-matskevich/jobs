@@ -29,13 +29,13 @@ function TasksFeedPage() {
         if (!input.name)
             return;
 
-        if (input.name.length > 64)
+        if (input.name.length > 128)
             return;
 
         if (!input.description)
             return;
 
-        if (input.description.length > 512)
+        if (input.description.length > 2048)
             return;
 
         CreateTask({

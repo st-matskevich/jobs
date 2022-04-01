@@ -16,7 +16,7 @@ function ReplyComponent(props) {
             <div className="flex-column flex-1 justify-between">
                 <span className="semi-bold">{reply.creator.name}</span>
                 <div className="reply flex-column">
-                    <span>{reply.text}</span>
+                    <span className="reply-description">{reply.text}</span>
                     <span className="timestamp">{moment(reply.createdAt).fromNow()}</span>
                 </div>
                 {customer ?

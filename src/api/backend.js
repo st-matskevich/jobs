@@ -232,3 +232,17 @@ export function useNotifications() {
 
     return { ...state, loading: state.data == null && state.error == null }
 }
+
+export function SearchTags(string) {
+    return GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.get(`${URL_BASE}/tags`, {
+                params: {
+                    query: string
+                },
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
