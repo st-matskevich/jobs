@@ -37,10 +37,12 @@ function TaskCreateComponent(props) {
                 placeholder="Выберите теги..."
                 cacheOptions
                 noOptionsMessage={() => "Введите что-нибудь для поиска"}
+                loadingMessage={() => "Загрузка..."}
                 loadOptions={promiseOptions}
                 onChange={(value) => { setInput(i => ({ ...i, tags: value })) }}
                 getOptionLabel={option => option.name}
                 getOptionValue={option => option.id}
+                formatCreateLabel={inputValue => "Создать тег \"" + inputValue + "\""}
                 getNewOptionData={(inputValue, optionLabel) => ({ id: "MA==", name: optionLabel })}
                 inputValue={selectInput}
                 onInputChange={inputValue => setSelectInput(inputValue.substring(0, 32).toLocaleLowerCase())}
