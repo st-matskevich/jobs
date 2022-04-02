@@ -13,6 +13,14 @@ import TaskPage from "./TaskPage";
 import moment from 'moment';
 import 'moment/locale/ru';
 import TaskComponent from "./TaskComponent";
+import SearchHeaderComponent from "./SearchHeaderComponent";
+import { useState } from "react";
+
+const filters = [
+    { value: FEED_SCOPE.CUSTOMER, label: "Я заказчик" },
+    { value: FEED_SCOPE.NOT_ASSIGNED, label: "Открытые задачи" },
+    { value: FEED_SCOPE.DOER, label: "Я исполнитель" }
+]
 
 function TasksFeedPage() {
     const history = useHistory();
@@ -22,8 +30,9 @@ function TasksFeedPage() {
     const profile = useUserProfile();
 
     //TODO: handle errors
-    const scope = profile.data?.customer ? FEED_SCOPE.CUSTOMER : FEED_SCOPE.NOT_ASSIGNED;
-    const feed = useTasksFeed(scope);
+    const [scope, setScope] = useState(FEED_SCOPE.NOT_ASSIGNED);
+    const [search, setSearch] = useState("");
+    const feed = useTasksFeed(scope, search);
 
     function OnCreateTask(input) {
         if (!input.name)
@@ -32,13 +41,13 @@ function TasksFeedPage() {
         if (input.name.length > 128)
             return;
 
-        if(!input.tags)
+        if (!input.tags)
             return;
 
-        if(input.tags.length < 1)
+        if (input.tags.length < 1)
             return;
 
-        if(input.tags.length > 5)
+        if (input.tags.length > 5)
             return;
 
         if (!input.description)
@@ -50,7 +59,7 @@ function TasksFeedPage() {
         CreateTask({
             name: input.name,
             description: input.description,
-            tags: input.tags
+            tags: input.tags.map(tag => ({ ...tag, id: tag.new ? "MA==" : tag.id }))
         }).then(function () {
             history.push("/tasks");
         }).catch(function (error) {
@@ -101,6 +110,12 @@ function TasksFeedPage() {
     return (
         <Switch>
             <Route exact path="/tasks">
+                <SearchHeaderComponent
+                    filters={filters}
+                    selectedFilter={scope}
+                    onFilterChange={value => setScope(value)}
+                    onInputChange={event => setSearch(event.target.value)}
+                />
                 {RenderTaskCreateButton()}
                 {RenderTaskList()}
             </Route>

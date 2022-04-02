@@ -57,12 +57,13 @@ export function useUserProfile() {
     return { ...state, loading: state.data == null && state.error == null }
 }
 
-function GetTasksFeed(scope) {
+function GetTasksFeed(scope, query) {
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/tasks`, {
                 params: {
-                    scope: scope
+                    scope: scope,
+                    query: query
                 },
                 headers: {
                     Authorization: 'Bearer ' + idToken
@@ -94,14 +95,14 @@ export function CreateTask(task) {
 }
 
 //TODO: add pagination
-export function useTasksFeed(scope) {
+export function useTasksFeed(scope, query) {
     const [state, setState] = useState({
         data: null,
         error: null
     });
 
     useEffect(() => {
-        GetTasksFeed(scope)
+        GetTasksFeed(scope, query)
             .then(response => {
                 setState(s => { return { ...s, data: response.data } })
             })
@@ -109,7 +110,7 @@ export function useTasksFeed(scope) {
                 console.log(error)
                 setState(s => { return { ...s, error: error.response?.data } })
             })
-    }, [scope]);
+    }, [scope, query]);
 
     return { ...state, loading: state.data == null && state.error == null }
 }

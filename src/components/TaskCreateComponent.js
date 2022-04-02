@@ -43,13 +43,13 @@ function TaskCreateComponent(props) {
                 getOptionLabel={option => option.name}
                 getOptionValue={option => option.id}
                 formatCreateLabel={inputValue => "Создать тег \"" + inputValue + "\""}
-                getNewOptionData={(inputValue, optionLabel) => ({ id: "MA==", name: optionLabel })}
+                getNewOptionData={(inputValue, optionLabel) => ({ id: inputValue, name: optionLabel, new: true })}
                 inputValue={selectInput}
                 onInputChange={inputValue => setSelectInput(inputValue.substring(0, 32).toLocaleLowerCase())}
             />
             <textarea className="flex-1 form-input" placeholder="Опишите Ваш заказ..."
                 value={input.description}
-                onChange={(event) => { setInput(i => ({ ...i, description: event.target.value })) }}
+                onChange={event => setInput(i => ({ ...i, description: event.target.value }))}
             />
             <button className="button" onClick={() => { onCreate(input) }}>Создать заказ</button>
         </div>
