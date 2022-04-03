@@ -1,17 +1,7 @@
 import "./TasksFeedPage.scss";
 import { useState } from 'react';
-import AsyncCreatableSelect from 'react-select/async-creatable';
-import { SearchTags } from "../api/backend";
-
-const promiseOptions = (inputValue) =>
-    new Promise((resolve, reject) => {
-        SearchTags(inputValue).then(response => {
-            resolve(response.data)
-        }).catch(error => {
-            //handle error?
-            reject(error)
-        })
-    })
+import CreatableSelect from 'react-select/creatable';
+import { useTags } from "../api/backend";
 
 function TaskCreateComponent(props) {
     const onCreate = props.onCreate;
@@ -22,6 +12,7 @@ function TaskCreateComponent(props) {
     });
 
     const [selectInput, setSelectInput] = useState("");
+    const tags = useTags(selectInput);
 
     return (
         <div className="card flex-1 flex-column text-start add-task-wrapper">
@@ -30,15 +21,16 @@ function TaskCreateComponent(props) {
                 value={input.name}
                 onChange={(event) => { setInput(i => ({ ...i, name: event.target.value })) }}
             />
-            <AsyncCreatableSelect
+            <CreatableSelect
                 isMulti
                 className="tag-select_parent"
                 classNamePrefix="tag-select"
                 placeholder="Выберите теги..."
-                cacheOptions
+                options={tags.data ? tags.data : []}
+                isLoading={tags.loading}
+                allowCreateWhileLoading={false}
                 noOptionsMessage={() => "Введите что-нибудь для поиска"}
                 loadingMessage={() => "Загрузка..."}
-                loadOptions={promiseOptions}
                 onChange={(value) => { setInput(i => ({ ...i, tags: value })) }}
                 getOptionLabel={option => option.name}
                 getOptionValue={option => option.id}

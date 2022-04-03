@@ -98,21 +98,27 @@ export function CreateTask(task) {
 export function useTasksFeed(scope, query) {
     const [state, setState] = useState({
         data: null,
-        error: null
+        error: null,
+        loading: false
     });
 
     useEffect(() => {
-        GetTasksFeed(scope, query)
-            .then(response => {
-                setState(s => { return { ...s, data: response.data } })
-            })
-            .catch(error => {
-                console.log(error)
-                setState(s => { return { ...s, error: error.response?.data } })
-            })
+        setState(s => ({ ...s, loading: true }));
+        const timeout = setTimeout(() =>
+            GetTasksFeed(scope, query)
+                .then(response => {
+                    setState({ data: response.data, loading: false, error: null })
+                })
+                .catch(error => {
+                    console.log(error)
+                    setState({ error: error.response?.data, loading: false, data: null })
+                })
+            , 300)
+
+        return () => clearTimeout(timeout)
     }, [scope, query]);
 
-    return { ...state, loading: state.data == null && state.error == null }
+    return state
 }
 
 export function useTask(taskID) {
@@ -234,16 +240,45 @@ export function useNotifications() {
     return { ...state, loading: state.data == null && state.error == null }
 }
 
-export function SearchTags(string) {
+export function SearchTags(query) {
+    if (query.length === 0)
+        return Promise.resolve([]);
+
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/tags`, {
                 params: {
-                    query: string
+                    query: query
                 },
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
             })
         });
+}
+
+export function useTags(query) {
+    const [state, setState] = useState({
+        data: null,
+        error: null,
+        loading: false
+    });
+
+    useEffect(() => {
+        setState(s => ({ ...s, loading: true }));
+        const timeout = setTimeout(() =>
+            SearchTags(query)
+                .then(response => {
+                    setState({ data: response.data, loading: false, error: null })
+                })
+                .catch(error => {
+                    console.log(error)
+                    setState({ error: error.response?.data, loading: false, data: null })
+                })
+            , 300)
+
+        return () => clearTimeout(timeout)
+    }, [query]);
+
+    return state
 }
