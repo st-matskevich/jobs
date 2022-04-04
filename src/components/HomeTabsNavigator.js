@@ -12,11 +12,12 @@ import {
     useRouteMatch
 } from "react-router-dom";
 import ProfilePage from "./ProfilePage"
-import TasksFeedPage from "./TasksFeedPage"
+import TasksRouter from "./TasksRouter"
 import NotificationsPage from "./NotificationsPage"
 import { useEffect } from "react"
 import { requestProfile } from "../actions/actions"
 import { useDispatch } from "react-redux"
+import 'moment/locale/ru';
 
 function HomeTabsNavigator() {
 
@@ -26,7 +27,7 @@ function HomeTabsNavigator() {
     const routes = [
         {
             path: "/tasks",
-            content: () => <TasksFeedPage />
+            content: () => <TasksRouter />
         },
         {
             path: "/notifications",

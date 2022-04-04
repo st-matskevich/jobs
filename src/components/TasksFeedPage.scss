@@ -14,52 +14,6 @@
     align-items: center;
 }
 
-.add-task-wrapper {
-
-    & .page-title,
-    & input,
-    & textarea,
-    & .tag-select_parent {
-        margin-bottom: 10px;
-    }
-
-    & textarea {
-        resize: none;
-    }
-
-    & .tag-select__menu {
-        font-size: 13px;
-    }
-
-    & .tag-select__control {
-        border-radius: 20px;
-        border-color: $background-focus;
-        background-color: $background-color;
-        font-size: 13px;
-        box-shadow: none !important;
-        transition: 0.3s;
-    }
-
-    & .tag-select__menu {
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-
-    & .tag-select__menu-list>div {
-        padding: 6px 8px;
-    }
-
-    & .tag-select__multi-value,
-    & .tag-select__multi-value__label {
-        background-color: $primary-color;
-        color: $secondary-color;
-    }
-
-    & .tag-select__control--is-focused {
-        border-color: $primary-color !important;
-    }
-}
-
 .task-card {
     margin-bottom: 10px;
     text-align: left;

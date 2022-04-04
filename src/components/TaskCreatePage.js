@@ -1,10 +1,11 @@
-import "./TasksFeedPage.scss";
+import "./TaskCreatePage.scss";
 import { useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { useTags } from "../api/backend";
+import { useHistory } from "react-router-dom";
+import { CreateTask } from "../api/backend";
 
-function TaskCreateComponent(props) {
-    const onCreate = props.onCreate;
+function TaskCreatePage() {
     const [input, setInput] = useState({
         name: "",
         description: "",
@@ -12,7 +13,42 @@ function TaskCreateComponent(props) {
     });
 
     const [selectInput, setSelectInput] = useState("");
+    const history = useHistory();
     const tags = useTags(selectInput);
+
+    function OnCreateTask(input) {
+        if (!input.name)
+            return;
+
+        if (input.name.length > 128)
+            return;
+
+        if (!input.tags)
+            return;
+
+        if (input.tags.length < 1)
+            return;
+
+        if (input.tags.length > 5)
+            return;
+
+        if (!input.description)
+            return;
+
+        if (input.description.length > 2048)
+            return;
+
+        CreateTask({
+            name: input.name,
+            description: input.description,
+            tags: input.tags.map(tag => ({ ...tag, id: tag.new ? "MA==" : tag.id }))
+        }).then(function () {
+            history.push("/tasks");
+        }).catch(function (error) {
+            //TODO: handle errors
+            console.log(error);
+        });
+    }
 
     return (
         <div className="card flex-1 flex-column text-start add-task-wrapper">
@@ -43,9 +79,9 @@ function TaskCreateComponent(props) {
                 value={input.description}
                 onChange={event => setInput(i => ({ ...i, description: event.target.value }))}
             />
-            <button className="button" onClick={() => { onCreate(input) }}>Создать заказ</button>
+            <button className="button" onClick={() => { OnCreateTask(input) }}>Создать заказ</button>
         </div>
     )
 }
 
-export default TaskCreateComponent;
+export default TaskCreatePage;
