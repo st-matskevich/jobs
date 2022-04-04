@@ -24,7 +24,7 @@ function TasksFeedPage() {
     function RenderTaskCreateButton() {
         if (profile.data?.customer)
             return (
-                <Link to="/tasks/add" className="add-task">
+                <Link to="/tasks/add" className="add-task" key="create">
                     <img src={addIcon} alt="list" />
                 </Link>
             )
@@ -35,7 +35,7 @@ function TasksFeedPage() {
     function RenderTaskList() {
         if (profile.data?.name && feed.data)
             return (
-                <div className="overflow-auto">
+                <div className="overflow-auto" key="feed">
                     {feed.data.map((task) => (
                         <Link className="card task-card" key={task.id} to={"/tasks/" + task.id}>
                             <TaskComponent task={task} />
@@ -49,6 +49,7 @@ function TasksFeedPage() {
 
     return [
         (<SearchHeaderComponent
+            key="search"
             filters={filters}
             selectedFilter={scope}
             onFilterChange={value => setScope(value)}
