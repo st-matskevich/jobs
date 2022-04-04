@@ -47,18 +47,16 @@ function TasksFeedPage() {
         return null
     }
 
-    return (
-        <div className="flex-column overflow-auto">
-            <SearchHeaderComponent
-                filters={filters}
-                selectedFilter={scope}
-                onFilterChange={value => setScope(value)}
-                onInputChange={event => setSearch(event.target.value)}
-            />
-            {RenderTaskCreateButton()}
-            {RenderTaskList()}
-        </div>
-    );
+    return [
+        (<SearchHeaderComponent
+            filters={filters}
+            selectedFilter={scope}
+            onFilterChange={value => setScope(value)}
+            onInputChange={event => setSearch(event.target.value)}
+        />),
+        RenderTaskCreateButton(),
+        RenderTaskList()
+    ];
 }
 
 export default TasksFeedPage;
