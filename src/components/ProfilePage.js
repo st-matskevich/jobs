@@ -7,11 +7,14 @@ import {
 import ProfileEditComponent from "./ProfileEditComponent";
 import ProfileViewComponent from "./ProfileViewComponent";
 import { useSelector } from "react-redux"
+import { requestProfile } from "../actions/actions"
+import { useDispatch } from "react-redux"
 
 function ProfilePage() {
     const history = useHistory();
     //TODO: handle error
     const profile = useSelector(state => state.profile);
+    const dispatch = useDispatch()
 
     function SaveProfileData(input) {
         if (!input.name)
@@ -24,6 +27,7 @@ function ProfilePage() {
             name: input.name,
             customer: input.customer,
         }).then(function () {
+            dispatch(requestProfile())
             history.push("/profile");
         }).catch(function (error) {
             //TODO: handle errors
