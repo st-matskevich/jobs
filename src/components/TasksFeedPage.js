@@ -1,5 +1,5 @@
 import "./TasksFeedPage.scss";
-import { useUserProfile, useTasksFeed, CreateTask, FEED_SCOPE } from "../api/backend";
+import { useTasksFeed, CreateTask, FEED_SCOPE } from "../api/backend";
 import {
     Switch,
     Route,
@@ -15,6 +15,7 @@ import 'moment/locale/ru';
 import TaskComponent from "./TaskComponent";
 import SearchHeaderComponent from "./SearchHeaderComponent";
 import { useState } from "react";
+import { useSelector } from "react-redux"
 
 const filters = [
     { value: FEED_SCOPE.CUSTOMER, label: "Я заказчик" },
@@ -26,8 +27,7 @@ function TasksFeedPage() {
     const history = useHistory();
     moment.locale('ru')
 
-    //TODO: handle errors
-    const profile = useUserProfile();
+    const profile = useSelector(state => state.profile);
 
     //TODO: handle errors
     const [scope, setScope] = useState(FEED_SCOPE.NOT_ASSIGNED);

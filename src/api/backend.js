@@ -15,7 +15,7 @@ export const NOTIFICATIONS_TYPES = {
     NEW_REPLY: 10000
 }
 
-function GetUserProfile() {
+export function GetUserProfile() {
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/profile`, {
@@ -35,10 +35,6 @@ export function SetUserProfile(profile) {
                 }
             })
         });
-}
-
-export function useUserProfile() {
-    return useAPI(GetUserProfile)
 }
 
 function GetTasksFeed(deps) {

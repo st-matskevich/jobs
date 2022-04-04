@@ -1,4 +1,4 @@
-import { useUserProfile, SetUserProfile } from "../api/backend";
+import { SetUserProfile } from "../api/backend";
 import {
     Switch,
     Route,
@@ -6,11 +6,12 @@ import {
 } from "react-router-dom";
 import ProfileEditComponent from "./ProfileEditComponent";
 import ProfileViewComponent from "./ProfileViewComponent";
+import { useSelector } from "react-redux"
 
 function ProfilePage() {
     const history = useHistory();
     //TODO: handle error
-    const profile = useUserProfile();
+    const profile = useSelector(state => state.profile);
 
     function SaveProfileData(input) {
         if (!input.name)

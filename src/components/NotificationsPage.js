@@ -1,13 +1,14 @@
 import "./NotificationsPage.scss";
 import "./TaskPage.scss";
 import { Link } from "react-router-dom";
-import { useUserProfile, useNotifications, NOTIFICATIONS_TYPES } from "../api/backend"
+import { useNotifications, NOTIFICATIONS_TYPES } from "../api/backend"
+import { useSelector } from "react-redux"
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
 
 function NotificationsPage() {
 
-    const profile = useUserProfile();
+    const profile = useSelector(state => state.profile);
     const notifications = useNotifications();
 
     function RenderNotificationsList() {

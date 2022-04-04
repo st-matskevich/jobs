@@ -14,21 +14,27 @@ import {
 import ProfilePage from "./ProfilePage"
 import TasksFeedPage from "./TasksFeedPage"
 import NotificationsPage from "./NotificationsPage"
+import { useEffect } from "react"
+import { requestProfile } from "../actions/actions"
+import { useDispatch } from "react-redux"
 
 function HomeTabsNavigator() {
+
+    const dispatch = useDispatch()
+    useEffect(() => dispatch(requestProfile()), [dispatch])
 
     const routes = [
         {
             path: "/tasks",
-            content: () => <TasksFeedPage/>
+            content: () => <TasksFeedPage />
         },
         {
             path: "/notifications",
-            content: () => <NotificationsPage/>
+            content: () => <NotificationsPage />
         },
         {
             path: "/profile",
-            content: () => <ProfilePage/>
+            content: () => <ProfilePage />
         }
     ];
 
@@ -43,14 +49,14 @@ function HomeTabsNavigator() {
             <div className="main-content-wrapper flex-column">
                 <Switch>
                     {routes.map((route, index) =>
-                        (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                exact={route.exact}
-                                children={<route.content />}
-                            />
-                        )
+                    (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            exact={route.exact}
+                            children={<route.content />}
+                        />
+                    )
                     )}
                 </Switch>
             </div>
