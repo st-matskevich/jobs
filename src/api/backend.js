@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GetAuth } from './firebase';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 const URL_BASE = process.env.REACT_APP_BACKEND_URL
 
@@ -38,26 +38,11 @@ export function SetUserProfile(profile) {
 }
 
 export function useUserProfile() {
-    const [state, setState] = useState({
-        data: null,
-        error: null
-    });
-
-    useEffect(() => {
-        GetUserProfile()
-            .then(response => {
-                setState(s => { return { ...s, data: response.data } })
-            })
-            .catch(error => {
-                console.log(error)
-                setState(s => { return { ...s, error: error.response?.data } })
-            })
-    }, []);
-
-    return { ...state, loading: state.data == null && state.error == null }
+    return useAPI(GetUserProfile)
 }
 
-function GetTasksFeed(scope, query) {
+function GetTasksFeed(deps) {
+    const { scope, query } = deps;
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/tasks`, {
@@ -72,7 +57,8 @@ function GetTasksFeed(scope, query) {
         });
 }
 
-function GetTask(taskID) {
+function GetTask(deps) {
+    const { taskID } = deps;
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/tasks/${taskID}`, {
@@ -96,53 +82,18 @@ export function CreateTask(task) {
 
 //TODO: add pagination
 export function useTasksFeed(scope, query) {
-    const [state, setState] = useState({
-        data: null,
-        error: null,
-        loading: false
-    });
-
-    useEffect(() => {
-        setState(s => ({ ...s, loading: true }));
-        const timeout = setTimeout(() =>
-            GetTasksFeed(scope, query)
-                .then(response => {
-                    setState({ data: response.data, loading: false, error: null })
-                })
-                .catch(error => {
-                    console.log(error)
-                    setState({ error: error.response?.data, loading: false, data: null })
-                })
-            , 300)
-
-        return () => clearTimeout(timeout)
-    }, [scope, query]);
-
-    return state
+    const deps = useMemo(() => ({ scope, query }), [scope, query])
+    return useAPI(GetTasksFeed, deps)
 }
 
 export function useTask(taskID) {
-    const [state, setState] = useState({
-        data: null,
-        error: null
-    });
-
-    useEffect(() => {
-        GetTask(taskID)
-            .then(response => {
-                setState(s => { return { ...s, data: response.data } })
-            })
-            .catch(error => {
-                console.log(error)
-                setState(s => { return { ...s, error: error.response?.data } })
-            })
-    }, [taskID]);
-
-    return { ...state, loading: state.data == null && state.error == null }
+    const deps = useMemo(() => ({ taskID }), [taskID])
+    return useAPI(GetTask, deps)
 }
 
 //TODO: add pagination
-function GetReplies(taskID) {
+function GetReplies(deps) {
+    const { taskID } = deps;
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/tasks/${taskID}/replies`, {
@@ -165,23 +116,8 @@ export function CreateReply(taskID, reply) {
 }
 
 export function useReplies(taskID) {
-    const [state, setState] = useState({
-        data: null,
-        error: null
-    });
-
-    useEffect(() => {
-        GetReplies(taskID)
-            .then(response => {
-                setState(s => { return { ...s, data: response.data } })
-            })
-            .catch(error => {
-                console.log(error)
-                setState(s => { return { ...s, error: error.response?.data } })
-            })
-    }, [taskID]);
-
-    return { ...state, loading: state.data == null && state.error == null }
+    const deps = useMemo(() => ({ taskID }), [taskID])
+    return useAPI(GetReplies, deps)
 }
 
 export function CloseTask(taskID, userID) {
@@ -221,26 +157,11 @@ function GetNotifications() {
 }
 
 export function useNotifications() {
-    const [state, setState] = useState({
-        data: null,
-        error: null
-    });
-
-    useEffect(() => {
-        GetNotifications()
-            .then(response => {
-                setState(s => { return { ...s, data: response.data } })
-            })
-            .catch(error => {
-                console.log(error)
-                setState(s => { return { ...s, error: error.response?.data } })
-            })
-    }, []);
-
-    return { ...state, loading: state.data == null && state.error == null }
+    return useAPI(GetNotifications)
 }
 
-export function SearchTags(query) {
+export function SearchTags(deps) {
+    const { query } = deps;
     if (query.length === 0)
         return Promise.resolve([]);
 
@@ -258,16 +179,26 @@ export function SearchTags(query) {
 }
 
 export function useTags(query) {
+    const deps = useMemo(() => ({ query }), [query])
+    return useAPI(SearchTags, deps, true)
+}
+
+function debounceCall(action) {
+    const timeout = setTimeout(action, 300);
+    return () => clearTimeout(timeout)
+}
+
+export function useAPI(promise, deps, debounce) {
     const [state, setState] = useState({
         data: null,
         error: null,
-        loading: false
+        loading: true
     });
 
     useEffect(() => {
         setState(s => ({ ...s, loading: true }));
-        const timeout = setTimeout(() =>
-            SearchTags(query)
+        const fetchAPI = () => {
+            promise(deps)
                 .then(response => {
                     setState({ data: response.data, loading: false, error: null })
                 })
@@ -275,10 +206,10 @@ export function useTags(query) {
                     console.log(error)
                     setState({ error: error.response?.data, loading: false, data: null })
                 })
-            , 300)
+        }
 
-        return () => clearTimeout(timeout)
-    }, [query]);
+        return debounce ? debounceCall(fetchAPI) : fetchAPI();
+    }, [promise, deps, debounce]);
 
     return state
 }
