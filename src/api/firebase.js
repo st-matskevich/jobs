@@ -1,10 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from 'react';
+import { getAnalytics } from "firebase/analytics";
 
 var firebase = null;
+var analytics = null;
 
-var config = {
+const config = {
     apiKey: "AIzaSyB2ayfhYcYE8NVM_7OQCoVCCdySLksLqtQ",
     authDomain: "jobs-2d511.firebaseapp.com",
     databaseURL: "https://jobs-2d511.firebaseio.com",
@@ -17,6 +19,7 @@ var config = {
 
 export function InitializeApp() {
     firebase = initializeApp(config);
+    analytics = getAnalytics(firebase);
 }
 
 export function GetApp() {
