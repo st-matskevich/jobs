@@ -26,3 +26,6 @@ yarn-error.log*
 
 # Project env files
 *.env
+
+# firebase deploy cache
+.firebase
