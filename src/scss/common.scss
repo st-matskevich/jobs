@@ -4,12 +4,14 @@ $primary-color: #5458f7;
 $primary-focus: #3d3fb3;
 $secondary-color: #ffffff;
 $background-color: #f4f4f4;
-$background-focus: #b3b3b3;
+$background-focus: #aaaaaa;
 $background-text: #000000;
-$font-family: "Raleway", sans-serif;
+$font-family: "Raleway",
+sans-serif;
 
 .button,
-input, textarea {
+input,
+textarea {
     font-family: $font-family;
 }
 
@@ -28,8 +30,10 @@ input, textarea {
     justify-content: center;
     text-decoration: none;
     user-select: none;
+    letter-spacing: 1px;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         background: $primary-focus;
         outline: none;
     }
@@ -38,7 +42,8 @@ input, textarea {
         color: $background-text;
         background: $background-color;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             background: $background-focus;
         }
     }
@@ -118,31 +123,43 @@ span.background {
     color: $background-text;
 }
 
-.form-input{
+.form-input {
     background: $background-color;
-    border: none;
     border-radius: 20px;
     outline: none;
     padding: 10px;
     font-size: 13px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: $background-focus;
+    transition: 0.3s;
 }
 
-.overflow-auto{
+.form-input:focus {
+    border-color: $primary-color;
+}
+
+.overflow-auto {
     overflow: auto;
 }
 
 .reply-wrapper {
     margin-top: 10px;
-    
+
     & .text-avatar {
         margin-right: 10px;
     }
+
     & .reply {
         margin-top: 10px;
         font-size: 12px;
         background: $background-color;
         border-radius: 20px;
         padding: 10px;
+
+        border-style: solid;
+        border-width: 1px;
+        border-color: $background-focus;
 
         & .timestamp {
             color: $background-focus;

@@ -1,15 +1,16 @@
 import "./TextAvatar.scss"
 
+const colorsPalette = [
+    '#bdc3c7', '#6f7b87', '#2c3e50',
+    '#2f3193', '#662d91', '#922790',
+    '#ec2176', '#ed1c24', '#f36622',
+    '#f8941e', '#fab70f', '#fdde00',
+    '#d1d219', '#8ec73f', '#00a650',
+    '#00aa9c', '#00adef', '#0081cd',
+    '#005bab'];
+
 function TextAvatar(props) {
     const text = props.text.split(/[\s.\-_]/).reduce((res, part) => (res ? res[0] : '') + (part ? part[0] : ''), "").toUpperCase();
-    const colorsPalette = [
-        '#bdc3c7', '#6f7b87', '#2c3e50',
-        '#2f3193', '#662d91', '#922790',
-        '#ec2176', '#ed1c24', '#f36622',
-        '#f8941e', '#fab70f', '#fdde00',
-        '#d1d219', '#8ec73f', '#00a650',
-        '#00aa9c', '#00adef', '#0081cd',
-        '#005bab'];
     const color = colorsPalette[props.text.split("").reduce((res, part) => res + part.charCodeAt(0), 0) % colorsPalette.length];
     return (
         <svg width={props.width} height={props.height} className="text-avatar">

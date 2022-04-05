@@ -4,28 +4,15 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/analytics"
-
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import reducer from './reducers/reducer'
 
-var firebaseConfig = {
-  apiKey: "AIzaSyB2ayfhYcYE8NVM_7OQCoVCCdySLksLqtQ",
-  authDomain: "jobs-2d511.firebaseapp.com",
-  databaseURL: "https://jobs-2d511.firebaseio.com",
-  projectId: "jobs-2d511",
-  storageBucket: "jobs-2d511.appspot.com",
-  messagingSenderId: "133221531100",
-  appId: "1:133221531100:web:bd88985dea10dd74596319",
-  measurementId: "G-4E5J3ND6SF"
-};
+import { InitializeApp } from "./api/firebase";
 
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
-const store = createStore(reducer)
+InitializeApp();
+const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,4 +1,4 @@
-import "./MainRoute.scss"
+import "./HomeTabsNavigator.scss"
 import listIcon from "../svg/list-icon.svg"
 import listIconActive from "../svg/list-icon.active.svg"
 import notificationIcon from "../svg/notification-icon.svg"
@@ -11,24 +11,31 @@ import {
     Link,
     useRouteMatch
 } from "react-router-dom";
-import ProfileScreen from "./ProfileScreen"
-import TasksScreen from "./TaskListScreen"
-import NotificationsScreen from "./NotificationsScreen"
+import ProfilePage from "./ProfilePage"
+import TasksRouter from "./TasksRouter"
+import NotificationsPage from "./NotificationsPage"
+import { useEffect } from "react"
+import { requestProfile } from "../actions/actions"
+import { useDispatch } from "react-redux"
+import 'moment/locale/ru';
 
-function MainRoute() {
+function HomeTabsNavigator() {
+
+    const dispatch = useDispatch()
+    useEffect(() => dispatch(requestProfile()), [dispatch])
 
     const routes = [
         {
             path: "/tasks",
-            content: () => <TasksScreen/>
+            content: () => <TasksRouter />
         },
         {
             path: "/notifications",
-            content: () => <NotificationsScreen/>
+            content: () => <NotificationsPage />
         },
         {
             path: "/profile",
-            content: () => <ProfileScreen/>
+            content: () => <ProfilePage />
         }
     ];
 
@@ -43,30 +50,30 @@ function MainRoute() {
             <div className="main-content-wrapper flex-column">
                 <Switch>
                     {routes.map((route, index) =>
-                        (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                exact={route.exact}
-                                children={<route.content />}
-                            />
-                        )
+                    (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            exact={route.exact}
+                            children={<route.content />}
+                        />
+                    )
                     )}
                 </Switch>
             </div>
             <div className="bottom-navigator-wrapper">
                 <Link className="tab" to="/tasks">
-                    <img src={match.list ? listIconActive : listIcon} className="icon" alt="list" />
+                    <img src={match.list ? listIconActive : listIcon} className="icon" alt="tasks" />
                 </Link>
                 <Link className="tab" to="/notifications">
-                    <img src={match.notifications ? notificationIconActive : notificationIcon} className="icon" alt="list" />
+                    <img src={match.notifications ? notificationIconActive : notificationIcon} className="icon" alt="notifications" />
                 </Link>
                 <Link className="tab" to="/profile">
-                    <img src={match.profile ? profileIconActive : profileIcon} className="icon" alt="list" />
+                    <img src={match.profile ? profileIconActive : profileIcon} className="icon" alt="profile" />
                 </Link>
             </div>
         </div>
     )
 }
 
-export default MainRoute;
+export default HomeTabsNavigator;

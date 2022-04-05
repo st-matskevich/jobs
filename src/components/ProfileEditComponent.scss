@@ -1,15 +1,5 @@
 @import "../scss/common.scss";
 
-#profile_edit {
-    font-size: 13px;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-
-    & img {
-        margin-right: 12px;
-    }
-}
-
 #username_wrapper {
     margin-bottom: 10px;
 }
@@ -71,15 +61,4 @@
     margin-bottom: 10px;
     font-size: 12px;
     font-weight: 500;
-}
-
-#user_profile {
-    margin-bottom: 10px;
-    text-align: left;
-    color: $background-text;
-    font-size: 14px;
-
-    & div {
-        margin-left: 10px;
-    }
 }

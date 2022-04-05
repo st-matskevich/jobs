@@ -1,0 +1,54 @@
+@import "../scss/common.scss";
+
+.header {
+    background: $secondary-color;
+    flex-shrink: 0;
+    height: 45px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    & .header-content {
+        position: relative;
+        align-items: center;
+
+        & .search-container {
+            position: relative;
+            margin-left: 8px;
+
+            & .form-input {
+                padding-right: 35px;
+            }
+
+            & .search-icon {
+                position: absolute;
+                right: 10px;
+                width: 25px;
+                height: 25px;
+
+                top: 50%;
+                transform: translate(0, -50%);
+            }
+        }
+
+        & .filters-conatiner {
+            position: absolute;
+            width: 100%;
+            top: 100%;
+            margin-top: 5px;
+            text-align: left;
+            border-radius: 4px;
+            overflow: hidden;
+
+            & .option {
+                background: $secondary-color;
+                padding: 6px 8px;
+                cursor: pointer;
+            }
+
+            &:not(:hover) .option.selected, & .option:hover {
+                background-color: #ddeafe;
+            }
+        }
+    }
+
+}

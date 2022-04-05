@@ -1,0 +1,17 @@
+@import "../scss/common.scss";
+
+.empty-profile-card {
+    text-align: center;
+
+    & .message {
+        color: $primary-color;
+        letter-spacing: 1px;
+        margin-bottom: 25px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    & img {
+        max-width: 100%;
+    }
+}

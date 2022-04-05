@@ -1,10 +1,11 @@
 @import "../scss/common.scss";
-@import "./TaskListScreen.scss";
+@import "./TasksFeedPage.scss";
 
 .task-card {
     & .task-description {
         margin-top: 10px;
         font-size: 12px;
+        white-space: pre-wrap;
     }
 
     & hr {
@@ -24,19 +25,23 @@
     }
 
     & .reply-wrapper {
+        & .reply-description {
+            white-space: pre-wrap;
+        }
+
         & .button {
             flex: 1;
             margin-top: 10px;
             margin-bottom: 20px;
             padding-top: 5px;
             padding-bottom: 5px;
-    
+
             &#approve {
                 background: #80ff61;
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
             }
-    
+
             &#hide {
                 background: #fa3d3d;
                 border-top-left-radius: 0;

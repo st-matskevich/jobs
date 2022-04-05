@@ -14,17 +14,7 @@
     align-items: center;
 }
 
-.add-task-wrapper{
-    & span, & input, & textarea {
-        margin-bottom: 10px;
-    }
-
-    & textarea {
-        resize: none;
-    }
-}
-
-.task-card{
+.task-card {
     margin-bottom: 10px;
     text-align: left;
     color: $background-text;
@@ -36,8 +26,23 @@
         margin-right: 10px;
     }
 
+    & .tags-container {
+        margin-top: 10px;
+        gap: 3px;
+
+        .tag {
+            padding: 2px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: $background-focus;
+            color: $background-focus;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    }
+
     & .bottom {
-        color: $background-focus; 
+        color: $background-focus;
         margin-top: 10px;
         font-size: 12px;
     }

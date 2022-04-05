@@ -1,54 +1,48 @@
-import './LoginRoute.scss';
+import './LoginPage.scss';
 import { useState, useEffect } from 'react';
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import { GetAuth } from "../api/firebase";
+import { signInWithPhoneNumber } from "firebase/auth";
+import { RecaptchaVerifier } from "firebase/auth";
 
 const LoginStages = {
     Phone: 0,
     SMS: 1
 }
 
-function LoginRoute(props) {
-
+function LoginPage(props) {
+    //TODO: state should probably be merged
     const [loading, setLoading] = useState(false);
     const [loginStage, setLoginStage] = useState(LoginStages.Phone);
     const [usetInput, setUserInput] = useState("");
 
     useEffect(() => {
-        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('captcha', {
+        window.recaptchaVerifier = new RecaptchaVerifier('captcha', {
             'size': 'invisible',
-        });
+        }, GetAuth());
     }, []);
 
     function SignIn() {
         setLoading(true);
-        firebase.auth().signInWithPhoneNumber(usetInput, window.recaptchaVerifier)
-            .then(function (confirmationResult) {
-                // SMS sent. Prompt user to type the code from the message, then sign the
-                // user in with confirmationResult.confirm(code).
+        signInWithPhoneNumber(GetAuth(), usetInput, window.recaptchaVerifier)
+            .then((confirmationResult) => {
                 window.confirmationResult = confirmationResult;
                 setUserInput("")
                 setLoginStage(LoginStages.SMS);
                 setLoading(false);
-                console.log("SMS send");
-            }).catch(function (error) {
-                // Error; SMS not sent
+            }).catch((error) => {
                 setLoading(false);
-                console.error(error);
+                console.log(error);
             });
 
     }
 
     function ConfirmCode() {
         setLoading(true);
-        window.confirmationResult.confirm(usetInput).then(function (result) {
-            // User signed in successfully.
+        window.confirmationResult.confirm(usetInput).then(() => {
             setLoading(false);
-            console.log("Signed in");
-        }).catch(function (error) {
-            // User couldn't sign in (bad verification code?)
+        }).catch((error) => {
             setLoading(false);
-            console.error(error);
+            console.log(error);
         });
 
     }
@@ -64,7 +58,7 @@ function LoginRoute(props) {
         <div className="login-card">
             <div className="title">jobs</div>
             <div id="captcha"></div>
-            { props.loading || loading ?
+            {props.loading || loading ?
                 <div className="loader-wrapper">
                     <div className="login-loader"></div>
                 </div>
@@ -82,4 +76,4 @@ function LoginRoute(props) {
     );
 }
 
-export default LoginRoute;
+export default LoginPage;
