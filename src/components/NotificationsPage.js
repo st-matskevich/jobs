@@ -5,6 +5,7 @@ import { useNotifications, NOTIFICATIONS_TYPES } from "../api/backend"
 import { useSelector } from "react-redux"
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
+import EmptyProfileComponent from "./EmptyProfileComponent";
 
 function NotificationsPage() {
 
@@ -56,6 +57,9 @@ function NotificationsPage() {
                     })}
                 </div>
             )
+
+        if (!profile.loading && !profile.data.name)
+            return <EmptyProfileComponent />
 
         return null
     }

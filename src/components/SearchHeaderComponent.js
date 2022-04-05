@@ -24,11 +24,11 @@ function SearchHeaderComponent(props) {
         <div className="flex-row header">
             <div className="flex-row flex-1 header-content">
                 <div className="filter-button" onClick={() => toggleFilters(!showFilters)}>
-                    <img src={showFilters ? filterIconActive : filterIcon} className="filter-icon" alt="list" />
+                    <img src={showFilters ? filterIconActive : filterIcon} className="filter-icon" alt="filter" />
                 </div>
                 <div className="flex-row flex-1 search-container">
                     <input className="flex-1 form-input" type="text" placeholder="Поиск задач" onChange={props.onInputChange} />
-                    <img src={searchIcon} className="search-icon" alt="list" />
+                    <img src={searchIcon} className="search-icon" alt="search" />
                 </div>
                 {showFilters ? RenderFiltersList() : null}
             </div>

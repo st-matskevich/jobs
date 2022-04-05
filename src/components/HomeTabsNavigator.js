@@ -63,13 +63,13 @@ function HomeTabsNavigator() {
             </div>
             <div className="bottom-navigator-wrapper">
                 <Link className="tab" to="/tasks">
-                    <img src={match.list ? listIconActive : listIcon} className="icon" alt="list" />
+                    <img src={match.list ? listIconActive : listIcon} className="icon" alt="tasks" />
                 </Link>
                 <Link className="tab" to="/notifications">
-                    <img src={match.notifications ? notificationIconActive : notificationIcon} className="icon" alt="list" />
+                    <img src={match.notifications ? notificationIconActive : notificationIcon} className="icon" alt="notifications" />
                 </Link>
                 <Link className="tab" to="/profile">
-                    <img src={match.profile ? profileIconActive : profileIcon} className="icon" alt="list" />
+                    <img src={match.profile ? profileIconActive : profileIcon} className="icon" alt="profile" />
                 </Link>
             </div>
         </div>

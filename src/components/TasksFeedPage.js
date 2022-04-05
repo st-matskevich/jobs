@@ -6,6 +6,7 @@ import TaskComponent from "./TaskComponent";
 import SearchHeaderComponent from "./SearchHeaderComponent";
 import { useState } from "react";
 import { useSelector } from "react-redux"
+import EmptyProfileComponent from "./EmptyProfileComponent";
 
 const filters = [
     { value: FEED_SCOPE.CUSTOMER, label: "Я заказчик" },
@@ -20,6 +21,21 @@ function TasksFeedPage() {
     const [scope, setScope] = useState(FEED_SCOPE.NOT_ASSIGNED);
     const [search, setSearch] = useState("");
     const feed = useTasksFeed(scope, search);
+
+    function RenderSearchHeader() {
+        if (profile.data?.name)
+            return (
+                <SearchHeaderComponent
+                    key="search"
+                    filters={filters}
+                    selectedFilter={scope}
+                    onFilterChange={value => setScope(value)}
+                    onInputChange={event => setSearch(event.target.value)}
+                />
+            )
+
+        return null
+    }
 
     function RenderTaskCreateButton() {
         if (profile.data?.customer)
@@ -44,17 +60,14 @@ function TasksFeedPage() {
                 </div>
             )
 
+        if (!profile.loading && !profile.data.name)
+            return (<EmptyProfileComponent key="empty"/>)
+
         return null
     }
 
     return [
-        (<SearchHeaderComponent
-            key="search"
-            filters={filters}
-            selectedFilter={scope}
-            onFilterChange={value => setScope(value)}
-            onInputChange={event => setSearch(event.target.value)}
-        />),
+        RenderSearchHeader(),
         RenderTaskCreateButton(),
         RenderTaskList()
     ];
