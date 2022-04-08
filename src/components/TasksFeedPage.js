@@ -60,7 +60,7 @@ function TasksFeedPage() {
                 </div>
             )
 
-        if (!profile.loading && !profile.data.name)
+        if (!profile.loading && !profile.data?.name)
             return (<EmptyProfileComponent key="empty"/>)
 
         return null

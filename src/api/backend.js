@@ -65,6 +65,20 @@ function GetTask(deps) {
         });
 }
 
+export function LikeTask(taskID, value) {
+    return GetAuth().currentUser.getIdToken()
+    .then(idToken => {
+        return axios.post(`${URL_BASE}/tasks/${taskID}/like`, null, {
+            params: {
+                value: value
+            },
+            headers: {
+                Authorization: 'Bearer ' + idToken
+            }
+        })
+    });
+}
+
 export function CreateTask(task) {
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {

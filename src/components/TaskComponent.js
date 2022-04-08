@@ -1,13 +1,28 @@
 import "./TasksFeedPage.scss";
 import TextAvatar from "./TextAvatar";
 import moment from 'moment';
+import likeIcon from "../svg/like-icon.svg";
+import likeIconActive from "../svg/like-icon.active.svg";
+import { useState } from "react";
+import { LikeTask } from "../api/backend";
 
 function TaskComponent(props) {
-    const task = props.task;  
+    const task = props.task;
+    const [taskLiked, setTaskLike] = useState(task.liked);
+
+    function onTaskLike(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        LikeTask(task.id, !taskLiked).then(response => {
+            setTaskLike(response.data);
+        }).catch(error => {
+            //TODO: handle errors
+            console.log(error);
+        });
+    }
 
     function RenderTaskTags() {
-        if(task.tags?.length > 0)
-        {
+        if (task.tags?.length > 0) {
             return (
                 <div className="flex-row tags-container">
                     {task.tags.map((tag) => (
@@ -16,6 +31,12 @@ function TaskComponent(props) {
                 </div>
             )
         }
+    }
+
+    function GetStatsString() {
+        const time = moment(task.createdAt).fromNow();
+        const replies = task.closed ? "Задача закрыта" : task.repliesCount + " заявок";
+        return [time, replies].join(' · ');
     }
 
     return (
@@ -30,8 +51,10 @@ function TaskComponent(props) {
             {RenderTaskTags()}
             {props.children}
             <div className="flex-row justify-between bottom">
-                <span className="regular">{task.closed ? "Задача закрыта" : task.repliesCount + " заявок"}</span>
-                <span className="regular">{moment(task.createdAt).fromNow()}</span>
+                <span className="regular">{GetStatsString()}</span>
+                <div onClick={onTaskLike}>
+                    <img src={taskLiked ? likeIconActive : likeIcon} alt="like" />
+                </div>
             </div>
         </div>
     );
