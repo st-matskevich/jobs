@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { getAnalytics } from "firebase/analytics";
 
 var firebase = null;
-var analytics = null;
+//var analytics = null;
 
 const config = {
     apiKey: "AIzaSyB2ayfhYcYE8NVM_7OQCoVCCdySLksLqtQ",
@@ -19,7 +19,7 @@ const config = {
 
 export function InitializeApp() {
     firebase = initializeApp(config);
-    analytics = getAnalytics(firebase);
+    /*analytics = */getAnalytics(firebase);
 }
 
 export function GetApp() {
