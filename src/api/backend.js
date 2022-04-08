@@ -7,7 +7,8 @@ const URL_BASE = process.env.REACT_APP_BACKEND_URL
 export const FEED_SCOPE = {
     NOT_ASSIGNED: "NOT_ASSIGNED",
     CUSTOMER: "CUSTOMER",
-    DOER: "DOER"
+    DOER: "DOER",
+    LIKED: "LIKED"
 }
 
 export const NOTIFICATIONS_TYPES = {

@@ -9,9 +9,10 @@ import { useSelector } from "react-redux"
 import EmptyProfileComponent from "./EmptyProfileComponent";
 
 const filters = [
-    { value: FEED_SCOPE.CUSTOMER, label: "Я заказчик" },
     { value: FEED_SCOPE.NOT_ASSIGNED, label: "Открытые задачи" },
-    { value: FEED_SCOPE.DOER, label: "Я исполнитель" }
+    { value: FEED_SCOPE.CUSTOMER, label: "Я заказчик" },
+    { value: FEED_SCOPE.DOER, label: "Я исполнитель" },
+    { value: FEED_SCOPE.LIKED, label: "Мне нравится" }
 ]
 
 function TasksFeedPage() {
