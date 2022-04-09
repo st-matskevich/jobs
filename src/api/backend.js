@@ -7,7 +7,9 @@ const URL_BASE = process.env.REACT_APP_BACKEND_URL
 export const FEED_SCOPE = {
     NOT_ASSIGNED: "NOT_ASSIGNED",
     CUSTOMER: "CUSTOMER",
-    DOER: "DOER"
+    DOER: "DOER",
+    LIKED: "LIKED",
+    RECOMMENDATIONS: "RECOMMENDATIONS"
 }
 
 export const NOTIFICATIONS_TYPES = {
@@ -58,6 +60,20 @@ function GetTask(deps) {
     return GetAuth().currentUser.getIdToken()
         .then(idToken => {
             return axios.get(`${URL_BASE}/tasks/${taskID}`, {
+                headers: {
+                    Authorization: 'Bearer ' + idToken
+                }
+            })
+        });
+}
+
+export function LikeTask(taskID, value) {
+    return GetAuth().currentUser.getIdToken()
+        .then(idToken => {
+            return axios.post(`${URL_BASE}/tasks/${taskID}/like`, null, {
+                params: {
+                    value: value
+                },
                 headers: {
                     Authorization: 'Bearer ' + idToken
                 }
