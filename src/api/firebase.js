@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from 'react';
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { getAnalytics, logEvent, setUserProperties } from "firebase/analytics";
 
 var firebase = null;
 var analytics = null;
@@ -56,7 +56,6 @@ export function useAnalyticsRouterEvents(location) {
         logEvent(analytics, 'page_view', {
             page_location : page_path
         });
-        console.log(page_path)
     }, [location]);
 }
 
@@ -71,4 +70,8 @@ export const ANALYTICS_EVENTS = {
 
 export function logAnalyticsEvent(event, payload) {
     logEvent(analytics, event, payload);
+}
+
+export function setAnalyticsProperties(properties) {
+    setUserProperties(analytics, properties);
 }

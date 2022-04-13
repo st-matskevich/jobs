@@ -1,4 +1,5 @@
 import { GetUserProfile } from "../api/backend"
+import { setAnalyticsProperties } from "../api/firebase"
 
 export const requestProfile = () => {
     return dispatch => {
@@ -6,6 +7,7 @@ export const requestProfile = () => {
 
         GetUserProfile()
             .then(response => {
+                setAnalyticsProperties({ customer: response.data.customer })
                 dispatch(requestProfileSuccess(response.data));
             })
             .catch(error => {
