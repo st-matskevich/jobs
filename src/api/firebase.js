@@ -1,10 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from 'react';
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 var firebase = null;
-//var analytics = null;
+var analytics = null;
 
 const config = {
     apiKey: "AIzaSyB2ayfhYcYE8NVM_7OQCoVCCdySLksLqtQ",
@@ -19,7 +19,7 @@ const config = {
 
 export function InitializeApp() {
     firebase = initializeApp(config);
-    /*analytics = */getAnalytics(firebase);
+    analytics = getAnalytics(firebase);
 }
 
 export function GetApp() {
@@ -48,4 +48,27 @@ export function useFirebaseAuthState() {
     }, []);
 
     return state
+}
+
+export function useAnalyticsRouterEvents(location) {
+    useEffect(() => {
+        const page_path = location.pathname + location.search;
+        logEvent(analytics, 'page_view', {
+            page_location : page_path
+        });
+        console.log(page_path)
+    }, [location]);
+}
+
+export const ANALYTICS_EVENTS = {
+    CREATE_TASK: "create_task",
+    ADD_REPLY: "add_reply",
+    LIKE_TASK: "like_task",
+    CLOSE_TASK: "close_task",
+    UPDATE_PROFILE: "update_profile",
+    CHANGE_TASKS_FILTER: "change_tasks_filter"
+}
+
+export function logAnalyticsEvent(event, payload) {
+    logEvent(analytics, event, payload);
 }

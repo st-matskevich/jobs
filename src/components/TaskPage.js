@@ -4,6 +4,7 @@ import TaskComponent from "./TaskComponent";
 import ReplyComponent from "./ReplyComponent";
 import ReplyCreateComponent from "./ReplyCreateComponent";
 import { useTask, useReplies, CreateReply, CloseTask, HideReply } from "../api/backend"
+import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
 
 function TaskPage() {
 
@@ -22,6 +23,7 @@ function TaskPage() {
             return;
 
         CreateReply(id, input).then(function () {
+            logAnalyticsEvent(ANALYTICS_EVENTS.ADD_REPLY, { task: id });
             history.push("/tasks/" + id);
         }).catch(function (error) {
             //TODO: handle errors
@@ -40,6 +42,7 @@ function TaskPage() {
 
     function OnApproveReply(reply) {
         CloseTask(id, reply.creator.id).then(function () {
+            logAnalyticsEvent(ANALYTICS_EVENTS.CLOSE_TASK, { task: id });
             history.push("/tasks/" + id);
         }).catch(function (error) {
             //TODO: handle errors

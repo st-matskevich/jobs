@@ -7,6 +7,7 @@ import SearchHeaderComponent from "./SearchHeaderComponent";
 import { useState } from "react";
 import { useSelector } from "react-redux"
 import EmptyProfileComponent from "./EmptyProfileComponent";
+import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
 
 const filters = [
     { value: FEED_SCOPE.NOT_ASSIGNED, label: "Открытые задачи" },
@@ -31,7 +32,7 @@ function TasksFeedPage() {
                     key="search"
                     filters={filters}
                     selectedFilter={scope}
-                    onFilterChange={value => setScope(value)}
+                    onFilterChange={value => { logAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_TASKS_FILTER, {filter: value}); setScope(value); }}
                     onInputChange={event => setSearch(event.target.value)}
                 />
             )
@@ -63,7 +64,7 @@ function TasksFeedPage() {
             )
 
         if (!profile.loading && !profile.data?.name)
-            return (<EmptyProfileComponent key="empty"/>)
+            return (<EmptyProfileComponent key="empty" />)
 
         return null
     }
