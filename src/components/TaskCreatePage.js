@@ -68,10 +68,10 @@ function TaskCreatePage() {
                 noOptionsMessage={() => "Введите что-нибудь для поиска"}
                 loadingMessage={() => "Загрузка..."}
                 onChange={(value) => { setInput(i => ({ ...i, tags: value })) }}
-                getOptionLabel={option => option.name}
+                getOptionLabel={option => option.text}
                 getOptionValue={option => option.id}
                 formatCreateLabel={inputValue => "Создать тег \"" + inputValue + "\""}
-                getNewOptionData={(inputValue, optionLabel) => ({ id: inputValue, name: optionLabel, new: true })}
+                getNewOptionData={(inputValue, optionLabel) => ({ id: inputValue, text: optionLabel, new: true })}
                 inputValue={selectInput}
                 onInputChange={inputValue => setSelectInput(inputValue.substring(0, 32).toLocaleLowerCase())}
             />
