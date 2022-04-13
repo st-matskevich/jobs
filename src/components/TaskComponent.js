@@ -5,6 +5,7 @@ import likeIcon from "../svg/like-icon.svg";
 import likeIconActive from "../svg/like-icon.active.svg";
 import { useState } from "react";
 import { LikeTask } from "../api/backend";
+import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
 
 function TaskComponent(props) {
     const task = props.task;
@@ -14,6 +15,7 @@ function TaskComponent(props) {
         event.stopPropagation();
         event.preventDefault();
         LikeTask(task.id, !taskLiked).then(response => {
+            logAnalyticsEvent(ANALYTICS_EVENTS.LIKE_TASK, task.id);
             setTaskLike(response.data);
         }).catch(error => {
             //TODO: handle errors

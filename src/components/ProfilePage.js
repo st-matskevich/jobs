@@ -9,6 +9,7 @@ import ProfileViewComponent from "./ProfileViewComponent";
 import { useSelector } from "react-redux"
 import { requestProfile } from "../actions/actions"
 import { useDispatch } from "react-redux"
+import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
 
 function ProfilePage() {
     const history = useHistory();
@@ -23,11 +24,9 @@ function ProfilePage() {
         if (input.name.length > 32)
             return;
 
-        SetUserProfile({
-            name: input.name,
-            customer: input.customer,
-        }).then(function () {
-            dispatch(requestProfile())
+        SetUserProfile(input).then(function () {
+            logAnalyticsEvent(ANALYTICS_EVENTS.UPDATE_PROFILE, input);
+            dispatch(requestProfile());
             history.push("/profile");
         }).catch(function (error) {
             //TODO: handle errors

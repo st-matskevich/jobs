@@ -1,11 +1,11 @@
 import './App.scss';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
-    Redirect
+    Redirect,
+    useLocation
 } from "react-router-dom";
-import { useFirebaseAuthState } from "./api/firebase";
+import { useFirebaseAuthState, useAnalyticsRouterEvents } from "./api/firebase";
 
 import LoginPage from './components/LoginPage';
 import HomeTabsNavigator from './components/HomeTabsNavigator';
@@ -13,21 +13,22 @@ import HomeTabsNavigator from './components/HomeTabsNavigator';
 function App() {
     const { loaded, user } = useFirebaseAuthState();
 
+    const location = useLocation();
+    useAnalyticsRouterEvents(location);
+
     return (
         <div className="App">
-            <Router>
-                {!loaded ?
-                    <LoginPage loading={!loaded} /> :
-                    <Switch>
-                        <Route exact path="/">
-                            {user ? <Redirect to="/tasks" /> : <LoginPage />}
-                        </Route>
-                        <Route path="/:section">
-                            {user ? <HomeTabsNavigator /> : <Redirect to="/" />}
-                        </Route>
-                    </Switch>
-                }
-            </Router>
+            {!loaded ?
+                <LoginPage loading={!loaded} /> :
+                <Switch>
+                    <Route exact path="/">
+                        {user ? <Redirect to="/tasks" /> : <LoginPage />}
+                    </Route>
+                    <Route path="/:section">
+                        {user ? <HomeTabsNavigator /> : <Redirect to="/" />}
+                    </Route>
+                </Switch>
+            }
         </div>
     );
 }

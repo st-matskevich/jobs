@@ -4,6 +4,7 @@ import CreatableSelect from 'react-select/creatable';
 import { useTags } from "../api/backend";
 import { useHistory } from "react-router-dom";
 import { CreateTask } from "../api/backend";
+import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
 
 function TaskCreatePage() {
     const [input, setInput] = useState({
@@ -43,6 +44,7 @@ function TaskCreatePage() {
             description: input.description,
             tags: input.tags.map(tag => ({ ...tag, id: tag.new ? "MA==" : tag.id }))
         }).then(function () {
+            logAnalyticsEvent(ANALYTICS_EVENTS.CREATE_TASK);
             history.push("/tasks");
         }).catch(function (error) {
             //TODO: handle errors
