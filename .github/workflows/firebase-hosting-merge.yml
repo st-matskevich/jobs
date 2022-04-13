@@ -8,7 +8,7 @@ name: Deploy to Firebase Hosting on merge
       - master
 
 env:
-  REACT_APP_BACKEND_URL: 'https://jobs-io-backend.herokuapp.com/'
+  REACT_APP_BACKEND_URL: 'https://jobs-io-backend.herokuapp.com'
 
 jobs:
   build_and_deploy:
