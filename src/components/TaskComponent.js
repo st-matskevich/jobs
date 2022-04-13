@@ -26,7 +26,7 @@ function TaskComponent(props) {
             return (
                 <div className="flex-row tags-container">
                     {task.tags.map((tag) => (
-                        <span className="tag" key={tag.id} >{tag.name}</span>
+                        <span className="tag" key={tag.id} >{tag.text}</span>
                     ))}
                 </div>
             )
@@ -35,7 +35,7 @@ function TaskComponent(props) {
 
     function GetStatsString() {
         const time = moment(task.createdAt).fromNow();
-        const replies = task.closed ? "Задача закрыта" : task.repliesCount + " заявок";
+        const replies = task.closed ? "Задача закрыта" : task.replies + " заявок";
         return [time, replies].join(' · ');
     }
 
