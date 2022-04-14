@@ -29,3 +29,8 @@ const requestProfileError = error => ({
     type: "REQUEST_PROFILE_ERRORR",
     payload: error
 });
+
+export const setTasksScope = scope => ({
+    type: "SET_TASKS_FEED_SCOPE",
+    payload: scope
+});

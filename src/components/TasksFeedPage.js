@@ -5,9 +5,10 @@ import addIcon from "../svg/add-icon.svg";
 import TaskComponent from "./TaskComponent";
 import SearchHeaderComponent from "./SearchHeaderComponent";
 import { useState } from "react";
-import { useSelector } from "react-redux"
 import EmptyProfileComponent from "./EmptyProfileComponent";
 import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
+import { useSelector, useDispatch } from "react-redux"
+import { setTasksScope } from "../actions/actions"
 
 const filters = [
     { value: FEED_SCOPE.NOT_ASSIGNED, label: "Открытые задачи" },
@@ -20,9 +21,10 @@ const filters = [
 
 function TasksFeedPage() {
     const profile = useSelector(state => state.profile);
+    const dispatch = useDispatch();
 
     //TODO: handle errors
-    const [scope, setScope] = useState(FEED_SCOPE.NOT_ASSIGNED);
+    const scope = useSelector(state => state.feedScope);
     const [search, setSearch] = useState("");
     const feed = useTasksFeed(scope, search);
 
@@ -33,7 +35,7 @@ function TasksFeedPage() {
                     key="search"
                     filters={filters}
                     selectedFilter={scope}
-                    onFilterChange={value => { logAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_TASKS_FILTER, {filter: value}); setScope(value); }}
+                    onFilterChange={value => { logAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_TASKS_FILTER, {filter: value}); dispatch(setTasksScope(value)) }}
                     onInputChange={event => setSearch(event.target.value)}
                 />
             )
