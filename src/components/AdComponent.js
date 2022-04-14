@@ -10,7 +10,7 @@ function AdCard() {
                 <span className="regular">Adsterra</span>
             </div>
         </div>
-        <div id="container-f9aee10839cd56f81b1f928e24fcd1d0"></div>
+        <div id="container-7e6e0aefed391cb2e2a0e52e0c7624e2"></div>
     </div>)
 }
 
