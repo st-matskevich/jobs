@@ -6,9 +6,8 @@ import {
 } from "react-router-dom";
 import ProfileEditComponent from "./ProfileEditComponent";
 import ProfileViewComponent from "./ProfileViewComponent";
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { requestProfile } from "../actions/actions"
-import { useDispatch } from "react-redux"
 import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
 
 function ProfilePage() {
