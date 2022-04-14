@@ -9,7 +9,7 @@ export const FEED_SCOPE = {
     CUSTOMER: "CUSTOMER",
     DOER: "DOER",
     LIKED: "LIKED",
-    RECOMMENDATIONS: "RECOMMENDATIONS"
+    REPLIED: "REPLIED"
 }
 
 export const NOTIFICATIONS_TYPES = {
