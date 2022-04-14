@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux"
 import EmptyProfileComponent from "./EmptyProfileComponent";
 import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
+import AdComponent from "./AdComponent"
 
 const filters = [
     { value: FEED_SCOPE.NOT_ASSIGNED, label: "Открытые задачи" },
@@ -32,7 +33,7 @@ function TasksFeedPage() {
                     key="search"
                     filters={filters}
                     selectedFilter={scope}
-                    onFilterChange={value => { logAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_TASKS_FILTER, {filter: value}); setScope(value); }}
+                    onFilterChange={value => { logAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_TASKS_FILTER, { filter: value }); setScope(value); }}
                     onInputChange={event => setSearch(event.target.value)}
                 />
             )
@@ -55,6 +56,7 @@ function TasksFeedPage() {
         if (profile.data?.name && feed.data)
             return (
                 <div className="overflow-auto" key="feed">
+                    <AdComponent />
                     {feed.data.map((task) => (
                         <Link className="card task-card" key={task.id} to={"/tasks/" + task.id}>
                             <TaskComponent task={task} />
