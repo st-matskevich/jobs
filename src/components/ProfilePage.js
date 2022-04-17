@@ -1,47 +1,34 @@
-import { SetUserProfile } from "../api/backend";
-import {
-    Switch,
-    Route,
-    useHistory
-} from "react-router-dom";
-import ProfileEditComponent from "./ProfileEditComponent";
-import ProfileViewComponent from "./ProfileViewComponent";
-import { useSelector, useDispatch } from "react-redux"
-import { requestProfile } from "../actions/actions"
-import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
+import "./ProfilePage.scss";
+import TextAvatar from "./TextAvatar";
+import { Link } from "react-router-dom";
+import editIcon from "../svg/edit-icon.svg";
+import { GetAuth } from "../api/firebase";
 
-function ProfilePage() {
-    const history = useHistory();
-    //TODO: handle error
-    const profile = useSelector(state => state.profile);
-    const dispatch = useDispatch()
-
-    function SaveProfileData(input) {
-        if (!input.name)
-            return;
-
-        if (input.name.length > 32)
-            return;
-
-        SetUserProfile(input).then(function () {
-            logAnalyticsEvent(ANALYTICS_EVENTS.UPDATE_PROFILE, input);
-            dispatch(requestProfile());
-            history.push("/profile");
-        }).catch(function (error) {
-            //TODO: handle errors
-            console.log(error);
-        });
-    }
+function ProfilePage(props) {
+    const profile = props.profile
 
     return (
-        <Switch>
-            <Route exact path="/profile">
-                <ProfileViewComponent profile={profile.data}/>
-            </Route>
-            <Route path="/profile/edit">
-                <ProfileEditComponent profile={profile.data} onSubmit={SaveProfileData}/>
-            </Route>
-        </Switch>
+        <div className="card">
+            {
+                profile ?
+                    <div className="flex-row" id="user_profile">
+                        <TextAvatar width="40" height="40" text={profile.name} />
+                        <div className="flex-column flex-1 justify-between">
+                            <span className="semi-bold">{profile.name}</span>
+                            <span className="regular">{profile.customer ? "Заказчик" : "Исполнитель"}</span>
+                        </div>
+                    </div>
+                    :
+                    null
+            }
+            <Link className="button secondary" id="profile_edit" to="/profile/edit">
+                <img src={editIcon} alt="edit" />
+                Изменить данные
+            </Link>
+            <button className="button" onClick={() => {
+                GetAuth().signOut()
+            }}>Выйти</button>
+        </div>
     );
 }
 

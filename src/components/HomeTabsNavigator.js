@@ -11,7 +11,7 @@ import {
     Link,
     useRouteMatch
 } from "react-router-dom";
-import ProfilePage from "./ProfilePage"
+import ProfileRouter from "./ProfileRouter"
 import TasksRouter from "./TasksRouter"
 import NotificationsPage from "./NotificationsPage"
 import { useEffect } from "react"
@@ -35,7 +35,7 @@ function HomeTabsNavigator() {
         },
         {
             path: "/profile",
-            content: () => <ProfilePage />
+            content: () => <ProfileRouter />
         }
     ];
 
