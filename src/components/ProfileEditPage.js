@@ -1,8 +1,8 @@
-import "./ProfileEditComponent.scss"
+import "./ProfileEditPage.scss"
 import { useEffect, useState } from 'react';
 import TextAvatar from "./TextAvatar";
 
-function ProfileEditComponent(props) {
+function ProfileEditPage(props) {
     const [input, setInput] = useState({
         name: "",
         customer: false
@@ -48,4 +48,4 @@ function ProfileEditComponent(props) {
     );
 }
 
-export default ProfileEditComponent;
+export default ProfileEditPage;
