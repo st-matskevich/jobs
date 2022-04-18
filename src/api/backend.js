@@ -96,7 +96,7 @@ export function CreateTask(task) {
 //TODO: add pagination
 export function useTasksFeed(scope, query) {
     const deps = useMemo(() => ({ scope, query }), [scope, query])
-    return useAPI(GetTasksFeed, deps)
+    return useAPI(GetTasksFeed, deps, true)
 }
 
 export function useTask(taskID) {
