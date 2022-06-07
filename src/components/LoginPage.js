@@ -33,7 +33,6 @@ function LoginPage(props) {
                 setLoading(false);
                 console.log(error);
             });
-
     }
 
     function ConfirmCode() {
