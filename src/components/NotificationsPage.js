@@ -69,7 +69,7 @@ function NotificationsPage() {
                 </div>
             )
 
-        if (!profile.loading && !profile.data.name)
+        if (!profile.loading && !profile.data?.name)
             return <EmptyProfileComponent />
 
         return null
