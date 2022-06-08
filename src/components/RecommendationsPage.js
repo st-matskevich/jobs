@@ -25,17 +25,18 @@ function RecommendationCard(props) {
 
     return (
         <motion.div
-            dragDirectionLock
             drag="x"
             className="card task-card"
             dragConstraints={{ left: -1000, right: 1000 }}
             style={{ x, opacity, rotate }}
             animate={animControls}
             onDragEnd={(event, info) => {
-                if (Math.abs(info.offset.x) <= 150) {
+                //info.offset sometimes returns incorrect numbers
+                //so x.get() should be used until fixed
+                if (Math.abs(x.get()) <= 150) {
                     animControls.start({ x: 0 });
                 } else {
-                    SwipeCard(info.offset.x < 0)
+                    SwipeCard(x.get() < 0)
                 }
             }}
         >
