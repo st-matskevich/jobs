@@ -19,13 +19,13 @@ function RecommendationCard(props) {
         [0, 1, 1, 1, 0]
     );
 
-    function SwipeCard(left)
-    {
+    function SwipeCard(left) {
         animControls.start({ x: left ? -200 : 200, transitionEnd: { display: "none" } })
     }
 
     return (
         <motion.div
+            dragDirectionLock
             drag="x"
             className="card task-card"
             dragConstraints={{ left: -1000, right: 1000 }}
