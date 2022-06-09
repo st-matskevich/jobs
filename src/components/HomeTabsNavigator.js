@@ -1,6 +1,8 @@
 import "./HomeTabsNavigator.scss"
 import listIcon from "../svg/list-icon.svg"
 import listIconActive from "../svg/list-icon.active.svg"
+import recommendationsIcon from "../svg/recommendations-icon.svg"
+import recommendationsIconActive from "../svg/recommendations-icon.active.svg"
 import notificationIcon from "../svg/notification-icon.svg"
 import notificationIconActive from "../svg/notification-icon.active.svg"
 import profileIcon from "../svg/profile-icon.svg"
@@ -13,6 +15,7 @@ import {
 } from "react-router-dom";
 import ProfileRouter from "./ProfileRouter"
 import TasksRouter from "./TasksRouter"
+import RecommendationsPage from "./RecommendationsPage"
 import NotificationsPage from "./NotificationsPage"
 import { useEffect } from "react"
 import { requestProfile } from "../actions/actions"
@@ -30,6 +33,10 @@ function HomeTabsNavigator() {
             content: () => <TasksRouter />
         },
         {
+            path: "/recommendations",
+            content: () => <RecommendationsPage />
+        },
+        {
             path: "/notifications",
             content: () => <NotificationsPage />
         },
@@ -41,6 +48,7 @@ function HomeTabsNavigator() {
 
     const match = {
         list: useRouteMatch("/tasks"),
+        recommendations: useRouteMatch("/recommendations"),
         notifications: useRouteMatch("/notifications"),
         profile: useRouteMatch("/profile")
     }
@@ -64,6 +72,9 @@ function HomeTabsNavigator() {
             <div className="bottom-navigator-wrapper">
                 <Link className="tab" to="/tasks">
                     <img src={match.list ? listIconActive : listIcon} className="icon" alt="tasks" />
+                </Link>
+                <Link className="tab" to="/recommendations">
+                    <img src={match.recommendations ? recommendationsIconActive : recommendationsIcon} className="icon" alt="recommendations" />
                 </Link>
                 <Link className="tab" to="/notifications">
                     <img src={match.notifications ? notificationIconActive : notificationIcon} className="icon" alt="notifications" />

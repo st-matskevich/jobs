@@ -9,6 +9,7 @@ import { logAnalyticsEvent, ANALYTICS_EVENTS } from "../api/firebase"
 
 function TaskComponent(props) {
     const task = props.task;
+    const hideBottomBar = props.hideBottomBar;
     const [taskLiked, setTaskLike] = useState(task.liked);
 
     function onTaskLike(event) {
@@ -41,8 +42,22 @@ function TaskComponent(props) {
         return [time, replies].join(' · ');
     }
 
+    function RenderBottomBar() {
+        if (!hideBottomBar)
+            return (
+                <div className="flex-row justify-between bottom">
+                    <span className="regular">{GetStatsString()}</span>
+                    <div onClick={onTaskLike}>
+                        <img src={taskLiked ? likeIconActive : likeIcon} alt="like" />
+                    </div>
+                </div>
+            )
+
+        return null
+    }
+
     return (
-        <div className="flex-column">
+        <div className="flex-column content-wrapper">
             <div className="flex-row">
                 <TextAvatar width="40" height="40" text={task.customer.name} />
                 <div className="flex-column flex-1 justify-between">
@@ -52,12 +67,7 @@ function TaskComponent(props) {
             </div>
             {RenderTaskTags()}
             {props.children}
-            <div className="flex-row justify-between bottom">
-                <span className="regular">{GetStatsString()}</span>
-                <div onClick={onTaskLike}>
-                    <img src={taskLiked ? likeIconActive : likeIcon} alt="like" />
-                </div>
-            </div>
+            {RenderBottomBar()}
         </div>
     );
 }
