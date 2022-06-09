@@ -6,11 +6,25 @@ import TaskComponent from "./TaskComponent";
 import EmptyProfileComponent from "./EmptyProfileComponent";
 import likeIcon from "../svg/recommendation-like-icon.svg";
 import hideIcon from "../svg/recommendation-hide-icon.svg";
+import { useDrag } from "@use-gesture/react";
 
 function RecommendationCard(props) {
     const task = props.task;
     const animControls = useAnimation();
     const x = useMotionValue(0);
+
+    const bindDrag = useDrag(({ movement: [mx], last }) => {
+        x.set(mx)
+        if(last) {
+            if (Math.abs(x.get()) <= 150) {
+                animControls.start({ x: 0 });
+            } else {
+                SwipeCard(x.get() < 0)
+            }
+        }
+    }, {
+        preventScroll: true
+    });
 
     const rotate = useTransform(x, [-200, 200], [-50, 50]);
     const opacity = useTransform(
@@ -25,20 +39,10 @@ function RecommendationCard(props) {
 
     return (
         <motion.div
-            drag="x"
             className="card task-card"
-            dragConstraints={{ left: -1000, right: 1000 }}
             style={{ x, opacity, rotate }}
             animate={animControls}
-            onDragEnd={(event, info) => {
-                //info.offset sometimes returns incorrect numbers
-                //so x.get() should be used until fixed
-                if (Math.abs(x.get()) <= 150) {
-                    animControls.start({ x: 0 });
-                } else {
-                    SwipeCard(x.get() < 0)
-                }
-            }}
+            {...bindDrag()}
         >
             <TaskComponent task={task} hideBottomBar>
                 <span className="task-description">{task.description}</span>
